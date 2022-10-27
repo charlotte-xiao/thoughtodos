@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
+import {TaskListProvider} from "./support/TaskListContext";
+import TodoList from "./components/add-todo/TodoList";
 
 const Header = styled.header`
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 `;
 
 const Container = styled.div`
@@ -20,6 +17,9 @@ function App() {
             <Header>
                 <h1>Thoughtodos!</h1>
             </Header>
+            <TaskListProvider>
+                <TodoList/>
+            </TaskListProvider>
         </Container>
     );
 }
