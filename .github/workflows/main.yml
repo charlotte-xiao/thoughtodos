@@ -8,27 +8,25 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
     strategy:
-
       matrix:
-        node-version: 16.17.0
+        node-version: [16.17.0]
 
-      steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Run the eslint
-        run:  npm run lint
+    - name: Run the eslint
+      run:  npm run lint
 
-      - name: Run the tests
-        run:  npm run test
+    - name: Run the tests
+      run:  npm run test
