@@ -1,7 +1,7 @@
 import React from "react";
-import {TaskListContext} from "../../support/TaskListContext";
+import {TaskListContext} from "./TaskListContext";
 
-export default class TodoList extends React.Component<any, any> {
+export default class Index extends React.Component<never, never> {
 
     render() {
         return (

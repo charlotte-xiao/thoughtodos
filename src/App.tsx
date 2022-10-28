@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {TaskListProvider} from "./support/TaskListContext";
-import TodoList from "./components/add-todo/TodoList";
+import {TaskListProvider} from "./pages/TodoList/TaskListContext";
+import Index from "./pages/TodoList";
 
 const Header = styled.header`
   background-color: #282c34;
@@ -18,7 +18,7 @@ function App() {
                 <h1>Thoughtodos!</h1>
             </Header>
             <TaskListProvider>
-                <TodoList/>
+                <Index/>
             </TaskListProvider>
         </Container>
     );
