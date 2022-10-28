@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import React from 'react';
-import TodoList from "./index";
+import TaskList from "./index";
 import {TaskListProvider} from "./TaskListContext";
 
 jest.mock("../../default/defaultTaskList.json", () => {
@@ -11,7 +11,7 @@ describe('TodoList Test', () => {
     test('should render todo and completed title', () => {
         render(
             <TaskListProvider>
-                <TodoList/>
+                <TaskList/>
             </TaskListProvider>
         );
         screen.debug();

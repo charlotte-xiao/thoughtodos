@@ -1,16 +1,20 @@
 import React from "react";
 import {TaskListContext} from "./TaskListContext";
 import styled from "styled-components";
-const Title = styled.title`
-
+const Title = styled.h2`
+     text-align: left;
 `
 
-export default class TodoList extends React.Component<any, any> {
+const Content = styled.div`
+    margin: 2rem 5rem;
+`
+
+export default class TaskList extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
-                <Title>TodoList Information</Title>
+            <Content>
+                <Title>· TodoList Information</Title>
                 <TaskListContext.Consumer>
                     {({todoList}) => (
                         todoList.map(((task, index) => (
@@ -18,7 +22,7 @@ export default class TodoList extends React.Component<any, any> {
                         )))
                     )}
                 </TaskListContext.Consumer>
-                <Title>CompletedList Information</Title>
+                <Title>· CompletedList Information</Title>
                 <TaskListContext.Consumer>
                     {({completedList}) => (
                         completedList.map(((task, index) => (
@@ -26,7 +30,7 @@ export default class TodoList extends React.Component<any, any> {
                         )))
                     )}
                 </TaskListContext.Consumer>
-            </div>
+            </Content>
 
         );
     }
