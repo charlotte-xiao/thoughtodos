@@ -14,7 +14,7 @@ describe('Task Page Test', () => {
                 <TaskPage/>
             </TaskProvider>
         );
-        screen.debug();
+
         expect(screen.getByText("TodoList Information")).toBeInTheDocument();
         expect(screen.getByText("CompletedList Information")).toBeInTheDocument();
     });
