@@ -1,18 +1,22 @@
 {
   "todoList": [
     {
-      "name": "todoTask1"
+      "name": "todoTask1",
+      "isCompleted": false
     },
     {
-      "name": "todoTask2"
+      "name": "todoTask2",
+      "isCompleted": false
     }
   ],
   "completedList": [
     {
-      "name": "completedTask1"
+      "name": "completedTask1",
+      "isCompleted": true
     },
     {
-      "name": "completedTask2"
+      "name": "completedTask2",
+      "isCompleted": true
     }
   ]
 }

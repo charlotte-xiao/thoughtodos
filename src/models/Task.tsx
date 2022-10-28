@@ -1,3 +1,4 @@
 export default interface Task {
-    name: string
+    name: string;
+    isCompleted: boolean;
 }
