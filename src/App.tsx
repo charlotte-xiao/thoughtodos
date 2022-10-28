@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {TaskListProvider} from "./pages/TaskList/TaskListContext";
-import TaskList from "./pages/TaskList";
+import {TaskProvider} from "./pages/TaskPage/TaskContext";
+import Task from "./pages/TaskPage";
 
 const Header = styled.header`
     h1 {
@@ -28,9 +28,9 @@ function App() {
             <Header>
                 <h1>Thoughtodos!</h1>
             </Header>
-            <TaskListProvider>
-                <TaskList/>
-            </TaskListProvider>
+            <TaskProvider>
+                <Task/>
+            </TaskProvider>
         </Container>
     );
 }

@@ -1,18 +1,18 @@
 import {render, screen} from '@testing-library/react';
 import React from 'react';
-import TaskList from "./index";
-import {TaskListProvider} from "./TaskListContext";
+import TaskPage from "./index";
+import {TaskProvider} from "./TaskContext";
 
 jest.mock("../../default/defaultTaskList.json", () => {
     return {todoList: [{name: "123"}], completedList: []};
 });
 
-describe('TodoList Test', () => {
+describe('Task Page Test', () => {
     test('should render todo and completed title', () => {
         render(
-            <TaskListProvider>
-                <TaskList/>
-            </TaskListProvider>
+            <TaskProvider>
+                <TaskPage/>
+            </TaskProvider>
         );
         screen.debug();
         expect(screen.getByText("TodoList Information")).toBeInTheDocument();
