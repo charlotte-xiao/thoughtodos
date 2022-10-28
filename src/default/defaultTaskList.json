@@ -1,0 +1,18 @@
+{
+  "todoList": [
+    {
+      "name": "todoTask1"
+    },
+    {
+      "name": "todoTask2"
+    }
+  ],
+  "completedList": [
+    {
+      "name": "completedTask1"
+    },
+    {
+      "name": "completedTask2"
+    }
+  ]
+}

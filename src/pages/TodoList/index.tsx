@@ -1,12 +1,16 @@
 import React from "react";
 import {TaskListContext} from "./TaskListContext";
+import styled from "styled-components";
+const Title = styled.title`
 
-export default class Index extends React.Component<never, never> {
+`
+
+export default class TodoList extends React.Component<any, any> {
 
     render() {
         return (
             <div>
-                <h1>TodoList</h1>
+                <Title>TodoList Information</Title>
                 <TaskListContext.Consumer>
                     {({todoList}) => (
                         todoList.map(((task, index) => (
@@ -14,7 +18,7 @@ export default class Index extends React.Component<never, never> {
                         )))
                     )}
                 </TaskListContext.Consumer>
-                <h1>CompletedList</h1>
+                <Title>CompletedList Information</Title>
                 <TaskListContext.Consumer>
                     {({completedList}) => (
                         completedList.map(((task, index) => (
