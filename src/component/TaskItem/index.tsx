@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Item = styled.div`
+const Item = styled.li`
   height: 4rem;
   line-height: 4rem;
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
+  list-style:none;
   .is_completed {
     color: #E2E8F0;;
     text-decoration:line-through;
