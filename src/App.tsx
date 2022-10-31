@@ -1,17 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
+import {TaskProvider} from "./pages/TaskPage/TaskContext";
+import Task from "./pages/TaskPage";
 
 const Header = styled.header`
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    h1 {
+        font-size: 2rem;
+        font-weight: 800;
+    }
+    background: linear-gradient(0.25turn, #c21500, #ffc500);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 `;
 
 const Container = styled.div`
- text-align: center;
+    background-color: white;
+    font-family: "Google Sans", sans-serif;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
 `;
 
 function App() {
@@ -20,6 +28,9 @@ function App() {
             <Header>
                 <h1>Thoughtodos!</h1>
             </Header>
+            <TaskProvider>
+                <Task/>
+            </TaskProvider>
         </Container>
     );
 }
