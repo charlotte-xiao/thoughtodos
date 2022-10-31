@@ -25,7 +25,7 @@ export default class TaskItem extends React.Component<any, any> {
 
     render() {
         return (
-            <Item>
+            <Item data-testid='task-item'>
                 <input
                     type="checkbox"
                     defaultChecked={this.props.task.isCompleted}
