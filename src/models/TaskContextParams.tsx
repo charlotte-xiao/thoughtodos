@@ -1,11 +1,12 @@
 import TaskList from "./TaskList";
 import Task from "./Task";
+import {ACTION_TYPE} from "../constants/ActionType";
 
-export default interface TaskListProps {
+export default interface TaskContextParams {
     taskList: TaskList,
     toggleTaskList: ToggleTaskList
 }
 
 interface ToggleTaskList {
-    (task: Task): void
+    (actionType: ACTION_TYPE, task: Task): void
 }

@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
+import {ACTION_TYPE} from "../../constants/ActionType";
 
 const Input = styled.input`
   font-size: larger;
@@ -37,7 +38,7 @@ export default class AddTask extends React.Component<any, any> {
             name: this.state.name,
             isCompleted: false,
         }
-        this.props.toggleTaskList(newTask);
+        this.props.toggleTaskList(ACTION_TYPE.ADD_TASK, newTask);
     }
 
     toggleTaskName = (event: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +50,8 @@ export default class AddTask extends React.Component<any, any> {
     render() {
         return (
             <>
-                <Input type="text" value={this.state.name} onChange={this.toggleTaskName} placeholder="Please Input New Task Name"/>
+                <Input type="text" value={this.state.name} onChange={this.toggleTaskName}
+                       placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.addNewTask} value="Add Task"/>
             </>);
     }

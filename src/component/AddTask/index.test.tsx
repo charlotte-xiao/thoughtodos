@@ -3,6 +3,7 @@ import React from 'react';
 import AddTask from "./index";
 import userEvent from "@testing-library/user-event";
 import Task from "../../models/Task";
+import {ACTION_TYPE} from "../../constants/ActionType";
 
 describe('AddTask Test', () => {
     test('should render add button and input', () => {
@@ -25,7 +26,7 @@ describe('AddTask Test', () => {
         userEvent.type(screen.getByRole('textbox'), mockNewTask.name);
         userEvent.click(screen.getByRole('button', {name: 'Add Task'}));
 
-        expect(mockToggleTaskList).toHaveBeenLastCalledWith(mockNewTask);
+        expect(mockToggleTaskList).toHaveBeenLastCalledWith(ACTION_TYPE.ADD_TASK, mockNewTask);
     });
 });
 
