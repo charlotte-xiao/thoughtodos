@@ -3,11 +3,12 @@ import Task from "../../models/Task";
 import styled from "styled-components";
 import TaskItem from "../TaskItem";
 
-const Section = styled.div`
+const Section = styled.ul`
   border-style: solid;
   border-width: 0.25rem;
   border-color: rgb(237, 242, 247);
   border-radius: 0.5rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
 `
