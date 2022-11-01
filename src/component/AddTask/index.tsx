@@ -2,6 +2,7 @@ import React, {ChangeEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
 import {ACTION_TYPE} from "../../constants/ActionType";
+import {UpdateTaskList} from "../../models/TaskContextParams";
 
 const Input = styled.input`
   font-size: larger;
@@ -23,27 +24,34 @@ const Button = styled.input`
   border-radius: 0.25rem;
 `;
 
+type AddTaskProps = {
+    updateTaskList: UpdateTaskList
+}
 
-export default class AddTask extends React.Component<any, any> {
+type AddTaskState = {
+    taskName: string
+}
 
-    constructor(props: never) {
+export default class AddTask extends React.Component<AddTaskProps, AddTaskState> {
+
+    constructor(props: AddTaskProps) {
         super(props);
-        this.state = {name: ''}
+        this.state = {taskName: ''}
     }
 
     handleAddTask = () => {
-        const newTask: Task = {name: this.state.name,}
+        const newTask: Task = {name: this.state.taskName,} as Task;
         this.props.updateTaskList(ACTION_TYPE.ADD_TASK, newTask);
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({name: event.target.value})
+        this.setState({taskName: event.target.value})
     }
 
     render() {
         return (
             <>
-                <Input type="text" value={this.state.name} onChange={this.handleChangeTaskName}
+                <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
             </>);

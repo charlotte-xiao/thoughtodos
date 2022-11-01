@@ -13,7 +13,11 @@ const Section = styled.ul`
   flex-direction: column;
 `
 
-export default class TaskList extends React.Component<any, any> {
+type TaskListProps = {
+    taskList: Array<Task>;
+}
+
+export default class TaskList extends React.Component<TaskListProps, never> {
 
     render() {
         return (

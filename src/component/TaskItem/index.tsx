@@ -4,6 +4,7 @@ import DeleteImageURL from "../../assets/delete.png"
 import {TaskContext} from "../../pages/TaskPage/TaskContext";
 import {ACTION_TYPE} from "../../constants/ActionType";
 import TaskContextParams from "../../models/TaskContextParams";
+import Task from "../../models/Task";
 
 const Item = styled.li`
   height: 4rem;
@@ -38,14 +39,18 @@ const Img = styled.img`
   }
 `
 
-export default class TaskItem extends React.Component<any, any> {
+type TaskProps = {
+    task: Task;
+}
+
+export default class TaskItem extends React.Component<TaskProps, never> {
 
     static contextType: React.Context<TaskContextParams> = TaskContext;
     context!: React.ContextType<typeof TaskContext>;
 
     handleDeleteTask = () => {
         const context: TaskContextParams = this.context;
-        context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id});
+        context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id} as Task);
     }
 
     render() {

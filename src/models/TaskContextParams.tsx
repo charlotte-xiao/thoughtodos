@@ -7,6 +7,6 @@ export default interface TaskContextParams {
     updateTaskList: UpdateTaskList
 }
 
-interface UpdateTaskList {
+export interface UpdateTaskList {
     (actionType: ACTION_TYPE, task: Task): void
 }

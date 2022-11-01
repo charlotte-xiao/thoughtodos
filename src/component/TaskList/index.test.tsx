@@ -15,7 +15,7 @@ describe('TaskList Test', () => {
         );
 
         mockTaskList.map((task: Task) => {
-            expect(screen.getByText(task?.name ?? '')).toBeInTheDocument();
+            expect(screen.getByText(task.name)).toBeInTheDocument();
         })
     });
 });
