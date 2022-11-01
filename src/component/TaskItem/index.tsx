@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import DeleteImageURL from "../../assets/delete.png"
+import {TaskContext} from "../../pages/TaskPage/TaskContext";
+import {ACTION_TYPE} from "../../constants/ActionType";
+import TaskContextParams from "../../models/TaskContextParams";
 
 const Item = styled.li`
   height: 4rem;
@@ -7,11 +11,12 @@ const Item = styled.li`
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
-  list-style:none;
+  align-items: center;
+  list-style: none;
+
   .is_completed {
     color: #E2E8F0;;
-    text-decoration:line-through;
-    
+    text-decoration: line-through;
   }
 `
 
@@ -21,7 +26,27 @@ const Info = styled.div`
   flex: 1;
 `
 
+const Img = styled.img`
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 2rem;
+
+  :hover {
+    background-color: rgb(237, 242, 247);
+  }
+`
+
 export default class TaskItem extends React.Component<any, any> {
+
+    static contextType: React.Context<TaskContextParams> = TaskContext;
+    context!: React.ContextType<typeof TaskContext>;
+
+    handleDeleteTask = () => {
+        const context: TaskContextParams = this.context;
+        context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id});
+    }
 
     render() {
         return (
@@ -32,6 +57,7 @@ export default class TaskItem extends React.Component<any, any> {
                     className="input-checkbox"
                 />
                 <Info className={this.props.task.isCompleted ? 'is_completed' : ''}>{this.props.task.name}</Info>
+                <Img src={DeleteImageURL} alt="Delete Task" onClick={this.handleDeleteTask}/>
             </Item>
 
         )

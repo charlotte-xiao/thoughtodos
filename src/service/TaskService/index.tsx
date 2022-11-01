@@ -9,6 +9,7 @@ export default class TaskService {
     constructor() {
         this.taskStrategyMap = {
             [ACTION_TYPE.ADD_TASK]: this.addNewTask,
+            [ACTION_TYPE.DELETE_TASK]: this.deleteTask,
         }
     }
 
@@ -16,6 +17,12 @@ export default class TaskService {
         // Todo: Generate Unique ID in Back-End
         preTaskList.todoList.push({...input, id: new Date().getTime(), isCompleted: false});
         return {...preTaskList};
+    };
+
+    private deleteTask = (preTaskList: TaskList, input: Task): TaskList => {
+        const updatedTodoList = preTaskList.todoList.filter((task: Task) => task.id !== input.id);
+        const updatedCompletedList = preTaskList.completedList.filter((task: Task) => task.id !== input.id);
+        return {todoList: updatedTodoList, completedList: updatedCompletedList};
     };
 
     executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList, input: Task): TaskList => {
