@@ -33,15 +33,15 @@ export default class AddTask extends React.Component<any, any> {
         }
     }
 
-    addNewTask = () => {
+    handleAddTask = () => {
         const newTask: Task = {
             name: this.state.name,
             isCompleted: false,
         }
-        this.props.toggleTaskList(ACTION_TYPE.ADD_TASK, newTask);
+        this.props.updateTaskList(ACTION_TYPE.ADD_TASK, newTask);
     }
 
-    toggleTaskName = (event: ChangeEvent<HTMLInputElement>) => {
+    handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             name: event.target.value
         })
@@ -50,9 +50,9 @@ export default class AddTask extends React.Component<any, any> {
     render() {
         return (
             <>
-                <Input type="text" value={this.state.name} onChange={this.toggleTaskName}
+                <Input type="text" value={this.state.name} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
-                <Button type="button" onClick={this.addNewTask} value="Add Task"/>
+                <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
             </>);
     }
 

@@ -18,9 +18,9 @@ export default class TaskPage extends React.Component<any, any> {
         return (
             <Content>
                 <TaskContext.Consumer>
-                    {({taskList, toggleTaskList}) => (
+                    {({taskList, updateTaskList}) => (
                         <>
-                            <AddTask toggleTaskList={toggleTaskList}/>
+                            <AddTask updateTaskList={updateTaskList}/>
                             <Title><span>· </span>TodoList Information</Title>
                             <TaskList taskList={taskList.todoList}/>
                             <Title><span>· </span>CompletedList Information</Title>
