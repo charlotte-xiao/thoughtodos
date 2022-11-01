@@ -19,11 +19,10 @@ describe('AddTask Test', () => {
         const mockUpdateTaskList = jest.fn();
         const mockNewTask: Task = {
             name: 'new Task',
-            isCompleted: false,
         }
 
         render(<AddTask updateTaskList={mockUpdateTaskList}></AddTask>);
-        userEvent.type(screen.getByRole('textbox'), mockNewTask.name);
+        userEvent.type(screen.getByRole('textbox'), mockNewTask?.name ?? '');
         userEvent.click(screen.getByRole('button', {name: 'Add Task'}));
 
         expect(mockUpdateTaskList).toHaveBeenLastCalledWith(ACTION_TYPE.ADD_TASK, mockNewTask);

@@ -28,23 +28,16 @@ export default class AddTask extends React.Component<any, any> {
 
     constructor(props: never) {
         super(props);
-        this.state = {
-            name: ''
-        }
+        this.state = {name: ''}
     }
 
     handleAddTask = () => {
-        const newTask: Task = {
-            name: this.state.name,
-            isCompleted: false,
-        }
+        const newTask: Task = {name: this.state.name,}
         this.props.updateTaskList(ACTION_TYPE.ADD_TASK, newTask);
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            name: event.target.value
-        })
+        this.setState({name: event.target.value})
     }
 
     render() {

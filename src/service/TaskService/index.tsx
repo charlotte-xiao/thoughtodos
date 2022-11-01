@@ -14,7 +14,7 @@ export default class TaskService {
 
     private addNewTask = (preTaskList: TaskList, input: Task): TaskList => {
         // Todo: Generate Unique ID in Back-End
-        preTaskList.todoList.push({...input, id: new Date().getTime()});
+        preTaskList.todoList.push({...input, id: new Date().getTime(), isCompleted: false});
         return {...preTaskList};
     };
 

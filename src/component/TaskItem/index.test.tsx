@@ -9,8 +9,8 @@ describe('TaskItem Test', () => {
 
         render(<TaskItem task={mockTask}></TaskItem>);
 
-        expect(screen.getByText(mockTask.name)).toBeInTheDocument();
-        expect(screen.getByRole('checkbox', { checked: false })).toBeInTheDocument();
+        expect(screen.getByText(mockTask?.name ?? '')).toBeInTheDocument();
+        expect(screen.getByRole('checkbox', {checked: false})).toBeInTheDocument();
 
     });
 
@@ -19,8 +19,8 @@ describe('TaskItem Test', () => {
 
         render(<TaskItem task={mockTask}></TaskItem>);
 
-        expect(screen.getByText(mockTask.name)).toBeInTheDocument();
-        expect(screen.getByRole('checkbox', { checked: true })).toBeInTheDocument();
+        expect(screen.getByText(mockTask?.name ?? '')).toBeInTheDocument();
+        expect(screen.getByRole('checkbox', {checked: true})).toBeInTheDocument();
 
     });
 });
