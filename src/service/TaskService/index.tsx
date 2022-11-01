@@ -12,12 +12,13 @@ export default class TaskService {
         }
     }
 
+    private addNewTask = (preTaskList: TaskList, input: Task): TaskList => {
+        // Todo: Generate Unique ID in Back-End
+        preTaskList.todoList.push({...input, id: new Date().getTime()});
+        return {...preTaskList};
+    };
+
     executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList, input: Task): TaskList => {
         return this.taskStrategyMap[actionType](preTaskList, input);
     }
-
-    addNewTask = (preTaskList: TaskList, input: Task): TaskList => {
-        preTaskList.todoList.push(input);
-        return {...preTaskList};
-    };
 }

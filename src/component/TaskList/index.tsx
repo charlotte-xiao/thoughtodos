@@ -18,8 +18,8 @@ export default class TaskList extends React.Component<any, any> {
     render() {
         return (
             <Section>
-                {this.props.taskList.map((task: Task, index: number) => (
-                  <TaskItem key={index} task={task}></TaskItem>
+                {this.props.taskList.map((task: Task) => (
+                  <TaskItem key={task.id} task={task}></TaskItem>
                 ))}
             </Section>
         )

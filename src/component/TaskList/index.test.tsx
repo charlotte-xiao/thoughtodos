@@ -6,8 +6,8 @@ import Task from "../../models/Task";
 describe('TaskList Test', () => {
     test('should render TaskList', () => {
         const mockTaskList: Array<Task> = [
-            {name: 'task1', isCompleted: false},
-            {name: 'task2', isCompleted: false},
+            {id: 1, name: 'task1', isCompleted: false},
+            {id: 2, name: 'task2', isCompleted: false},
         ]
 
         render(
