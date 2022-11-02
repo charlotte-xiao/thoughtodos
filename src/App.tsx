@@ -9,7 +9,6 @@ const Header = styled.header`
         font-weight: 800;
     }
     background: linear-gradient(0.25turn, #c21500, #ffc500);
-    background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 `;
