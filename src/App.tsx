@@ -2,6 +2,8 @@ import React from 'react';
 import styled from "styled-components";
 import {TaskProvider} from "./pages/TaskPage/TaskContext";
 import TaskPage from "./pages/TaskPage";
+import {Provider} from "react-redux";
+import {store} from "./store/Store";
 
 const Header = styled.header`
     h1 {
@@ -28,7 +30,9 @@ function App() {
                 <h1>Thoughtodos!</h1>
             </Header>
             <TaskProvider>
-                <TaskPage/>
+                <Provider store={store}>
+                    <TaskPage/>
+                </Provider>
             </TaskProvider>
         </Container>
     );

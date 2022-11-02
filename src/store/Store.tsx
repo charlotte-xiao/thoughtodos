@@ -15,6 +15,10 @@ export type TaskAction = {
     task: Task
 }
 
+export type TaskDispatch = {
+    (actionParams: Action<TaskAction>): void
+}
+
 const taskReducer: TaskReducer = (state = defaultTaskLit, actionParams) => {
     const taskService = new TaskService();
     return taskService.executeStrategy(actionParams.type.actionType, state, actionParams.type.task);

@@ -2,8 +2,9 @@ import React, {ChangeEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
 import {ACTION_TYPE} from "../../constants/ActionType";
-import TaskContextParams from "../../models/TaskContextParams";
-import {TaskContext} from "../../pages/TaskPage/TaskContext";
+import {connect} from "react-redux";
+import {TaskAction, TaskDispatch} from "../../store/Store";
+import {Action} from "@reduxjs/toolkit";
 
 const Input = styled.input`
   font-size: larger;
@@ -25,22 +26,23 @@ const Button = styled.input`
   border-radius: 0.25rem;
 `;
 
+type AddTaskProps = {
+    handleAddTask(taskName: string): void;
+}
+
 type AddTaskState = {
     taskName: string
 }
 
-export default class AddTaskComponent extends React.Component<any, AddTaskState> {
+class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
 
-    static contextType: React.Context<TaskContextParams> = TaskContext;
-    context!: React.ContextType<typeof TaskContext>;
-
-    constructor(props: never) {
+    constructor(props: AddTaskProps) {
         super(props);
         this.state = {taskName: ''}
     }
 
     handleAddTask = () => {
-        this.context.updateTaskList(ACTION_TYPE.ADD_TASK, {name: this.state.taskName,} as Task);
+        this.props.handleAddTask(this.state.taskName);
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,3 +59,19 @@ export default class AddTaskComponent extends React.Component<any, AddTaskState>
     }
 
 }
+
+const mapDispatchToProps = (dispatch: TaskDispatch) => {
+    return {
+        handleAddTask: (taskName: string) => {
+            const taskAction: Action<TaskAction> = {
+                type: {
+                    actionType: ACTION_TYPE.ADD_TASK,
+                    task: {name: taskName,} as Task
+                }
+            }
+            dispatch(taskAction);
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddTaskComponent);

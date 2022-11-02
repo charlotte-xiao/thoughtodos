@@ -3,6 +3,8 @@ import React from 'react';
 import TaskPage from "./index";
 import {TaskProvider} from "./TaskContext";
 import userEvent from "@testing-library/user-event";
+import {Provider} from "react-redux";
+import {store} from "../../store/Store";
 
 jest.mock("../../default/defaultTaskList.json", () => {
     return {todoList: [{id: 1, name: "123"}], completedList: []};
@@ -11,9 +13,9 @@ jest.mock("../../default/defaultTaskList.json", () => {
 describe('Task Page Test', () => {
     test('should render todo and completed title', () => {
         render(
-            <TaskProvider>
+            <Provider store={store}>
                 <TaskPage/>
-            </TaskProvider>
+            </Provider>
         );
 
         expect(screen.getByText("TodoList Information")).toBeInTheDocument();
@@ -25,7 +27,9 @@ describe('Task Page Test', () => {
 
         render(
             <TaskProvider>
-                <TaskPage/>
+                <Provider store={store}>
+                    <TaskPage/>
+                </Provider>
             </TaskProvider>
         );
         userEvent.type(screen.getByRole('textbox'), mockNewTaskName);
