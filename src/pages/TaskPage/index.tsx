@@ -1,8 +1,8 @@
 import React from "react";
 import {TaskContext} from "./TaskContext";
 import styled from "styled-components";
-import TaskList from "../../component/TaskList";
-import AddTask from "../../component/AddTask";
+import TaskListComponent from "../../component/TaskList";
+import AddTaskComponent from "../../component/AddTask";
 
 const Title = styled.h2`
   text-align: left;
@@ -18,13 +18,13 @@ export default class TaskPage extends React.Component<any, any> {
         return (
             <Content>
                 <TaskContext.Consumer>
-                    {({taskList, updateTaskList}) => (
+                    {({taskList}) => (
                         <>
-                            <AddTask updateTaskList={updateTaskList}/>
+                            <AddTaskComponent/>
                             <Title><span>· </span>TodoList Information</Title>
-                            <TaskList taskList={taskList.todoList}/>
+                            <TaskListComponent taskList={taskList.todoList}/>
                             <Title><span>· </span>CompletedList Information</Title>
-                            <TaskList taskList={taskList.completedList}/>
+                            <TaskListComponent taskList={taskList.completedList}/>
                         </>
                     )}
                 </TaskContext.Consumer>

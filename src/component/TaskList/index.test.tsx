@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import React from 'react';
-import TaskList from "./index";
+import TaskListComponent from "./index";
 import Task from "../../models/Task";
 
 describe('TaskList Test', () => {
@@ -11,7 +11,7 @@ describe('TaskList Test', () => {
         ]
 
         render(
-            <TaskList taskList={mockTaskList}></TaskList>
+            <TaskListComponent taskList={mockTaskList}></TaskListComponent>
         );
 
         mockTaskList.map((task: Task) => {

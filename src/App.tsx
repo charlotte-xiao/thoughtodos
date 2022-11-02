@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {TaskProvider} from "./pages/TaskPage/TaskContext";
-import Task from "./pages/TaskPage";
+import TaskPage from "./pages/TaskPage";
 
 const Header = styled.header`
     h1 {
@@ -28,7 +28,7 @@ function App() {
                 <h1>Thoughtodos!</h1>
             </Header>
             <TaskProvider>
-                <Task/>
+                <TaskPage/>
             </TaskProvider>
         </Container>
     );

@@ -2,7 +2,8 @@ import React, {ChangeEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
 import {ACTION_TYPE} from "../../constants/ActionType";
-import {UpdateTaskList} from "../../models/TaskContextParams";
+import TaskContextParams from "../../models/TaskContextParams";
+import {TaskContext} from "../../pages/TaskPage/TaskContext";
 
 const Input = styled.input`
   font-size: larger;
@@ -24,24 +25,22 @@ const Button = styled.input`
   border-radius: 0.25rem;
 `;
 
-type AddTaskProps = {
-    updateTaskList: UpdateTaskList
-}
-
 type AddTaskState = {
     taskName: string
 }
 
-export default class AddTask extends React.Component<AddTaskProps, AddTaskState> {
+export default class AddTaskComponent extends React.Component<any, AddTaskState> {
 
-    constructor(props: AddTaskProps) {
+    static contextType: React.Context<TaskContextParams> = TaskContext;
+    context!: React.ContextType<typeof TaskContext>;
+
+    constructor(props: never) {
         super(props);
         this.state = {taskName: ''}
     }
 
     handleAddTask = () => {
-        const newTask: Task = {name: this.state.taskName,} as Task;
-        this.props.updateTaskList(ACTION_TYPE.ADD_TASK, newTask);
+        this.context.updateTaskList(ACTION_TYPE.ADD_TASK, {name: this.state.taskName,} as Task);
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {

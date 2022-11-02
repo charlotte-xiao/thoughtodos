@@ -43,14 +43,13 @@ type TaskProps = {
     task: Task;
 }
 
-export default class TaskItem extends React.Component<TaskProps, never> {
+export default class TaskItemComponent extends React.Component<TaskProps, never> {
 
     static contextType: React.Context<TaskContextParams> = TaskContext;
     context!: React.ContextType<typeof TaskContext>;
 
     handleDeleteTask = () => {
-        const context: TaskContextParams = this.context;
-        context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id} as Task);
+        this.context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id} as Task);
     }
 
     render() {
