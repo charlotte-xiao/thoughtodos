@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import DeleteImageURL from "../../assets/delete.png"
-import {TaskContext} from "../../pages/TaskPage/TaskContext";
 import {ACTION_TYPE} from "../../constants/ActionType";
-import TaskContextParams from "../../models/TaskContextParams";
 import Task from "../../models/Task";
+import {TaskAction, TaskDispatch} from "../../store/Store";
+import {Action} from "@reduxjs/toolkit";
+import {connect} from "react-redux";
 
 const Item = styled.li`
   height: 4rem;
@@ -41,15 +42,13 @@ const Img = styled.img`
 
 type TaskProps = {
     task: Task;
+    handleDeleteTask(id: number): void;
 }
 
-export default class TaskItemComponent extends React.Component<TaskProps, never> {
-
-    static contextType: React.Context<TaskContextParams> = TaskContext;
-    context!: React.ContextType<typeof TaskContext>;
+class TaskItemComponent extends React.Component<TaskProps, never> {
 
     handleDeleteTask = () => {
-        this.context.updateTaskList(ACTION_TYPE.DELETE_TASK, {id: this.props.task.id} as Task);
+        this.props.handleDeleteTask(this.props.task.id);
     }
 
     render() {
@@ -68,3 +67,19 @@ export default class TaskItemComponent extends React.Component<TaskProps, never>
     }
 
 }
+
+const mapDispatchToProps = (dispatch: TaskDispatch) => {
+    return {
+        handleDeleteTask: (id: number) => {
+            const taskAction: Action<TaskAction> = {
+                type: {
+                    actionType: ACTION_TYPE.DELETE_TASK,
+                    task: {id: id,} as Task
+                }
+            }
+            dispatch(taskAction);
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(TaskItemComponent);
