@@ -1,7 +1,7 @@
 import React from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
-import TaskItem from "../TaskItem";
+import TaskItemComponent from "../TaskItem";
 
 const Section = styled.ul`
   border-style: solid;
@@ -13,13 +13,17 @@ const Section = styled.ul`
   flex-direction: column;
 `
 
-export default class TaskList extends React.Component<any, any> {
+type TaskListProps = {
+    taskList: Array<Task>;
+}
+
+export default class TaskListComponent extends React.Component<TaskListProps, never> {
 
     render() {
         return (
             <Section>
-                {this.props.taskList.map((task: Task, index: number) => (
-                  <TaskItem key={index} task={task}></TaskItem>
+                {this.props.taskList.map((task: Task) => (
+                  <TaskItemComponent key={task.id} task={task}></TaskItemComponent>
                 ))}
             </Section>
         )

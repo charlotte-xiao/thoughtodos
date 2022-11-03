@@ -2,6 +2,9 @@ import React, {ChangeEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
 import {ACTION_TYPE} from "../../constants/ActionType";
+import {connect} from "react-redux";
+import {TaskAction, TaskDispatch} from "../../store/Store";
+import {Action} from "@reduxjs/toolkit";
 
 const Input = styled.input`
   font-size: larger;
@@ -23,37 +26,52 @@ const Button = styled.input`
   border-radius: 0.25rem;
 `;
 
+type AddTaskProps = {
+    handleAddTask(taskName: string): void;
+}
 
-export default class AddTask extends React.Component<any, any> {
+type AddTaskState = {
+    taskName: string
+}
 
-    constructor(props: never) {
+class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
+
+    constructor(props: AddTaskProps) {
         super(props);
-        this.state = {
-            name: ''
-        }
+        this.state = {taskName: ''}
     }
 
     handleAddTask = () => {
-        const newTask: Task = {
-            name: this.state.name,
-            isCompleted: false,
-        }
-        this.props.updateTaskList(ACTION_TYPE.ADD_TASK, newTask);
+        this.props.handleAddTask(this.state.taskName);
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            name: event.target.value
-        })
+        this.setState({taskName: event.target.value})
     }
 
     render() {
         return (
             <>
-                <Input type="text" value={this.state.name} onChange={this.handleChangeTaskName}
+                <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
             </>);
     }
 
 }
+
+const mapDispatchToProps = (dispatch: TaskDispatch) => {
+    return {
+        handleAddTask: (taskName: string) => {
+            const taskAction: Action<TaskAction> = {
+                type: {
+                    actionType: ACTION_TYPE.ADD_TASK,
+                    task: {name: taskName,} as Task
+                }
+            }
+            dispatch(taskAction);
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddTaskComponent);

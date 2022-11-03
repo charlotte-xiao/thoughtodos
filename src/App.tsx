@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import {TaskProvider} from "./pages/TaskPage/TaskContext";
-import Task from "./pages/TaskPage";
+import TaskPage from "./pages/TaskPage";
+import {Provider} from "react-redux";
+import {store} from "./store/Store";
 
 const Header = styled.header`
     h1 {
@@ -9,7 +10,6 @@ const Header = styled.header`
         font-weight: 800;
     }
     background: linear-gradient(0.25turn, #c21500, #ffc500);
-    background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
 `;
@@ -28,9 +28,9 @@ function App() {
             <Header>
                 <h1>Thoughtodos!</h1>
             </Header>
-            <TaskProvider>
-                <Task/>
-            </TaskProvider>
+            <Provider store={store}>
+                <TaskPage/>
+            </Provider>
         </Container>
     );
 }
