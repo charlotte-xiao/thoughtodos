@@ -1,7 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 import TaskPage from "./index";
-import {TaskProvider} from "./TaskContext";
 import userEvent from "@testing-library/user-event";
 import {Provider} from "react-redux";
 import {store} from "../../store/Store";
@@ -26,11 +25,9 @@ describe('Task Page Test', () => {
         const mockNewTaskName = 'new Task';
 
         render(
-            <TaskProvider>
-                <Provider store={store}>
-                    <TaskPage/>
-                </Provider>
-            </TaskProvider>
+            <Provider store={store}>
+                <TaskPage/>
+            </Provider>
         );
         userEvent.type(screen.getByRole('textbox'), mockNewTaskName);
         userEvent.click(screen.getByRole('button', {name: 'Add Task'}));
