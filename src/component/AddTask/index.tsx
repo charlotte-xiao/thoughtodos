@@ -5,6 +5,8 @@ import {ACTION_TYPE} from "../../constants/ActionType";
 import {connect} from "react-redux";
 import {TaskAction, TaskDispatch} from "../../store/Store";
 import {Action} from "@reduxjs/toolkit";
+import moment from "moment";
+import TaskList from "../../models/TaskList";
 
 const Input = styled.input`
   font-size: larger;
@@ -27,6 +29,7 @@ const Button = styled.input`
 `;
 
 type AddTaskProps = {
+    amount: number
     handleAddTask(taskName: string): void;
 }
 
@@ -52,12 +55,20 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
     render() {
         return (
             <>
+                <div>{moment().format('dddd MMMM D YYYY')}</div>
+                <div>{this.props.amount}</div>
                 <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
             </>);
     }
 
+}
+
+const mapStateToProps = (state: TaskList) => {
+    return {
+        amount: state.todoList.length + state.completedList.length,
+    }
 }
 
 const mapDispatchToProps = (dispatch: TaskDispatch) => {
@@ -74,4 +85,4 @@ const mapDispatchToProps = (dispatch: TaskDispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(AddTaskComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(AddTaskComponent);
