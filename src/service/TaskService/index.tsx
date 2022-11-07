@@ -46,8 +46,8 @@ export default class TaskService {
         return {todoList: updatedTodoList, completedList: updatedCompletedList} as TaskList;
     };
 
-    executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList, input: Task): TaskList => {
+    executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList | undefined, input: Task): TaskList => {
         actionType = actionType ?? ACTION_TYPE.DEFAULT;
-        return this.taskStrategyMap[actionType](preTaskList, input);
+        return this.taskStrategyMap[actionType](preTaskList ?? {} as TaskList, input);
     }
 }

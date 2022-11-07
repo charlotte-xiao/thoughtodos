@@ -1,7 +1,6 @@
 import {legacy_createStore as createStore} from 'redux'
 import TaskService from "../service/TaskService";
 import TaskList from "../models/TaskList";
-import defaultTaskLit from "../default/defaultTaskList.json"
 import {ACTION_TYPE} from "../constants/ActionType";
 import Task from "../models/Task";
 import {Action} from "@reduxjs/toolkit";
@@ -19,7 +18,7 @@ export type TaskDispatch = {
     (actionParams: Action<TaskAction>): void
 }
 
-const taskReducer: TaskReducer = (state = defaultTaskLit, actionParams) => {
+const taskReducer: TaskReducer = (state, actionParams) => {
     const taskService = new TaskService();
     return taskService.executeStrategy(actionParams.type.actionType, state, actionParams.type.task);
 };
