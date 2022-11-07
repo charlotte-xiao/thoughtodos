@@ -14,5 +14,10 @@ module.exports = {
     "<rootDir>/src/pages/**/*.{tsx,ts}",
     "<rootDir>/src/service/**/*.{tsx,ts}",
   ],
+  transform: {
+    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+  },
   testEnvironment: "jsdom",
+
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
 };
