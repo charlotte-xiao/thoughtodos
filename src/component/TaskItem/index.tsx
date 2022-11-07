@@ -43,12 +43,17 @@ const Img = styled.img`
 type TaskProps = {
     task: Task;
     handleDeleteTask(id: number): void;
+    handleSwitchTaskState(task: Task): void;
 }
 
 class TaskItemComponent extends React.Component<TaskProps, never> {
 
     handleDeleteTask = () => {
         this.props.handleDeleteTask(this.props.task.id);
+    }
+
+    handleSwitchTaskState = () => {
+        this.props.handleSwitchTaskState(this.props.task);
     }
 
     render() {
@@ -58,6 +63,7 @@ class TaskItemComponent extends React.Component<TaskProps, never> {
                     type="checkbox"
                     defaultChecked={this.props.task.isCompleted}
                     className="input-checkbox"
+                    onClick={this.handleSwitchTaskState}
                 />
                 <Info className={this.props.task.isCompleted ? 'is_completed' : ''}>{this.props.task.name}</Info>
                 <Img src={DeleteImageURL} alt="Delete Task" onClick={this.handleDeleteTask}/>
@@ -75,6 +81,15 @@ const mapDispatchToProps = (dispatch: TaskDispatch) => {
                 type: {
                     actionType: ACTION_TYPE.DELETE_TASK,
                     task: {id: id,} as Task
+                }
+            }
+            dispatch(taskAction);
+        },
+        handleSwitchTaskState: (task: Task) => {
+            const taskAction: Action<TaskAction> = {
+                type: {
+                    actionType: ACTION_TYPE.SWITCH_TASK_STATE,
+                    task: task
                 }
             }
             dispatch(taskAction);

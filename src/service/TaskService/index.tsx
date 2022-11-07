@@ -12,6 +12,7 @@ export default class TaskService {
             [ACTION_TYPE.DEFAULT]: this.getTaskList,
             [ACTION_TYPE.ADD_TASK]: this.addNewTask,
             [ACTION_TYPE.DELETE_TASK]: this.deleteTask,
+            [ACTION_TYPE.SWITCH_TASK_STATE]: this.switchTaskState,
         }
     }
 
@@ -30,6 +31,19 @@ export default class TaskService {
         const updatedTodoList = preTaskList.todoList.filter((task: Task) => task.id !== input.id);
         const updatedCompletedList = preTaskList.completedList.filter((task: Task) => task.id !== input.id);
         return {todoList: updatedTodoList, completedList: updatedCompletedList};
+    };
+
+    private switchTaskState = (preTaskList: TaskList, input: Task): TaskList => {
+        let updatedTodoList, updatedCompletedList;
+        const preTaskState = input.isCompleted;
+        if (preTaskState) {
+            updatedTodoList = preTaskList.todoList.concat({...input, isCompleted: !preTaskState});
+            updatedCompletedList = preTaskList.completedList.filter((task: Task) => task.id !== input.id);
+        } else {
+            updatedTodoList = preTaskList.todoList.filter((task: Task) => task.id !== input.id);
+            updatedCompletedList = preTaskList.completedList.concat({...input, isCompleted: !preTaskState});
+        }
+        return {todoList: updatedTodoList, completedList: updatedCompletedList} as TaskList;
     };
 
     executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList, input: Task): TaskList => {
