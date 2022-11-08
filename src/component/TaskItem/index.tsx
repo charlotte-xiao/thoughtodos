@@ -21,6 +21,12 @@ const Item = styled.li`
     background-color: #effaf6;
     text-decoration: line-through wavy #d8d7d7;
   }
+
+  input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
 `
 
 const Info = styled.div`
