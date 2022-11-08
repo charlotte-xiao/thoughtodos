@@ -16,11 +16,10 @@ jest.mock("moment", () => {
     return mockMoment;
 });
 describe('AddTask Test', () => {
-    test('should render add button and input', () => {
+    test('should render input', () => {
 
         render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
 
-        expect(screen.getByRole('button', {name: 'Add Task'})).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toBeInTheDocument();
 
     });

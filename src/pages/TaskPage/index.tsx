@@ -7,7 +7,12 @@ import TaskList from "../../models/TaskList";
 import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
 
 const Content = styled.div`
-  margin: 2rem 5rem;
+  background-color: white;
+  width: 60vh;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 3rem;
+  text-align: center;
 `
 
 type TaskPageProps = {
@@ -27,7 +32,7 @@ class TaskPage extends React.Component<TaskPageProps, TaskPageState> {
         }
     }
 
-    changeTaskFilterCondition = (taskFilterCondition: TaskFilterCondition) => {
+    changeTaskFilterCondition = (taskFilterCondition: number) => {
         this.setState({
             taskFilterCondition: taskFilterCondition
         });

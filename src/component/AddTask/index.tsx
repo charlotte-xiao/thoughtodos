@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
 import {ACTION_TYPE} from "../../constants/ActionType";
@@ -9,6 +9,45 @@ import moment from "moment";
 import TaskList from "../../models/TaskList";
 import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
 
+const NowDate = styled.div`
+  font-weight: bolder;
+  font-size: 2rem;
+  color: #495862;
+  text-align: left;
+`
+
+const ShowBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  div {
+    font-weight: normal;
+    font-size: 1.5rem;
+    color: darkgray;
+    flex: 1;
+    text-align: left;
+  }
+`
+
+const Button = styled.input`
+  color: #7f95a3;
+  background-color: white;
+  font-size: medium;
+  font-weight: bolder;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+  border: 0;
+  border-radius: 1rem;
+
+  &.is_active {
+    color: white;
+    background-color: #7f95a3;
+  }
+`;
+
 const Input = styled.input`
   font-size: larger;
   width: 50%;
@@ -16,56 +55,62 @@ const Input = styled.input`
   padding: 0.5rem;
 `;
 
-const Button = styled.input`
-  color: white;
-  font-size: larger;
-  font-weight: bolder;
-  background-color: rgb(29, 161, 242);
-  width: 15%;
-  height: 3rem;
-  padding: 0.5rem;
-  margin-left: 1rem;
-  border-color: white;
-  border-radius: 0.25rem;
-`;
-
 type AddTaskProps = {
     amount: number
     handleAddTask(taskName: string): void;
-    changeTaskFilterCondition(taskFilterCondition: TaskFilterCondition): void;
+    changeTaskFilterCondition(taskFilterCondition: number): void;
 }
 
 type AddTaskState = {
-    taskName: string
+    taskName: string,
+    taskFilterCondition: number
 }
 
 class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
 
     constructor(props: AddTaskProps) {
         super(props);
-        this.state = {taskName: ''}
+        this.state = {
+            taskName: '',
+            taskFilterCondition: TaskFilterCondition.ALL
+        }
     }
 
-    handleAddTask = () => {
-        this.props.handleAddTask(this.state.taskName);
+    handleAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.code === 'Enter') {
+            this.props.handleAddTask(this.state.taskName);
+        }
     }
 
     handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({taskName: event.target.value})
     }
+    handleChangeTaskFilterCondition = (condition: number) => {
+        this.setState({...this.state, taskFilterCondition: condition});
+        this.props.changeTaskFilterCondition(condition);
+    }
 
     render() {
         return (
-            <>
-                <div>{moment().format('dddd MMMM D YYYY')}</div>
-                <div>{this.props.amount} tasks</div>
-                <Button type="button" value="All" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.ALL)}/>
-                <Button type="button" value="Active" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.ACTIVE)}/>
-                <Button type="button" value="Completed" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.COMPLETED)}/>
-                <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
+            <div>
+                <NowDate>{moment().format('dddd MMMM D YYYY')}</NowDate>
+                <ShowBox>
+                    <div>{this.props.amount} tasks</div>
+                    {
+                        Object.entries(TaskFilterCondition).map((condition) => (
+                            <Button type="button" value={condition[0]} key={condition[1]}
+                                    className={condition[1] === this.state.taskFilterCondition ? 'is_active' : ''}
+                                    onClick={() => {
+                                        this.handleChangeTaskFilterCondition(condition[1])
+                                    }}/>
+                        ))
+                    }
+                </ShowBox>
+                <Input type="text" value={this.state.taskName}
+                       onKeyDown={this.handleAddTask}
+                       onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
-                <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
-            </>);
+            </div>);
     }
 
 }

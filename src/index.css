@@ -1,0 +1,9 @@
+body,
+html,
+ul,
+ol,
+h1,
+p {
+    margin: 0;
+    padding: 0;
+}
