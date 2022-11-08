@@ -95,6 +95,10 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
     handleAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === 'Enter') {
             this.props.handleAddTask(this.state.taskName);
+            this.setState({
+                ...this.state,
+                taskName: ''
+            })
         }
     }
 
@@ -125,7 +129,7 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
                 <Input type="text" value={this.state.taskName}
                        onKeyDown={this.handleAddTask}
                        onChange={this.handleChangeTaskName}
-                       placeholder="Add a new task..."/>
+                       placeholder="Add a new task...(type enter to submit)"/>
             </Container>);
     }
 
