@@ -56,7 +56,10 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
         return (
             <>
                 <div>{moment().format('dddd MMMM D YYYY')}</div>
-                <div>{this.props.amount}</div>
+                <div>{this.props.amount} tasks</div>
+                <Button type="button" value="All"/>
+                <Button type="button" value="Active"/>
+                <Button type="button" value="Completed"/>
                 <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.handleAddTask} value="Add Task"/>
