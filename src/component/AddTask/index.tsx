@@ -7,6 +7,7 @@ import {TaskAction, TaskDispatch} from "../../store/Store";
 import {Action} from "@reduxjs/toolkit";
 import moment from "moment";
 import TaskList from "../../models/TaskList";
+import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
 
 const Input = styled.input`
   font-size: larger;
@@ -31,6 +32,7 @@ const Button = styled.input`
 type AddTaskProps = {
     amount: number
     handleAddTask(taskName: string): void;
+    changeTaskFilterCondition(taskFilterCondition: TaskFilterCondition): void;
 }
 
 type AddTaskState = {
@@ -57,9 +59,9 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
             <>
                 <div>{moment().format('dddd MMMM D YYYY')}</div>
                 <div>{this.props.amount} tasks</div>
-                <Button type="button" value="All"/>
-                <Button type="button" value="Active"/>
-                <Button type="button" value="Completed"/>
+                <Button type="button" value="All" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.ALL)}/>
+                <Button type="button" value="Active" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.ACTIVE)}/>
+                <Button type="button" value="Completed" onClick={() => this.props.changeTaskFilterCondition(TaskFilterCondition.COMPLETED)}/>
                 <Input type="text" value={this.state.taskName} onChange={this.handleChangeTaskName}
                        placeholder="Please Input New Task Name"/>
                 <Button type="button" onClick={this.handleAddTask} value="Add Task"/>

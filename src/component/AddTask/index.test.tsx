@@ -18,7 +18,7 @@ jest.mock("moment", () => {
 describe('AddTask Test', () => {
     test('should render add button and input', () => {
 
-        render(<Provider store={store}><AddTaskComponent/></Provider>);
+        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
 
         expect(screen.getByRole('button', {name: 'Add Task'})).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -27,7 +27,7 @@ describe('AddTask Test', () => {
 
     test('should render current time info correctly', () => {
 
-        render(<Provider store={store}><AddTaskComponent/></Provider>);
+        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
 
         expect(screen.getByText('Tuesday November 1 2022')).toBeInTheDocument();
 
@@ -35,7 +35,7 @@ describe('AddTask Test', () => {
 
     test('should calculate current task amounts', () => {
 
-        render(<Provider store={store}><AddTaskComponent/></Provider>);
+        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
 
         expect(screen.getByText('4 tasks')).toBeInTheDocument();
 
