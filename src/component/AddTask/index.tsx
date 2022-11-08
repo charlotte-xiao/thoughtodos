@@ -9,6 +9,13 @@ import moment from "moment";
 import TaskList from "../../models/TaskList";
 import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
 
+const Container = styled.div`
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`
+
 const NowDate = styled.div`
   font-weight: bolder;
   font-size: 2rem;
@@ -50,9 +57,18 @@ const Button = styled.input`
 
 const Input = styled.input`
   font-size: larger;
-  width: 50%;
+  width: 100%;
   height: 2rem;
-  padding: 0.5rem;
+  border: 0;
+
+  ::-webkit-input-placeholder {
+    color: #7f95a3;
+  }
+
+  :focus {
+    outline: none;
+    border-bottom: 0.1rem solid gray;
+  }
 `;
 
 type AddTaskProps = {
@@ -92,7 +108,7 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
 
     render() {
         return (
-            <div>
+            <Container>
                 <NowDate>{moment().format('dddd MMMM D YYYY')}</NowDate>
                 <ShowBox>
                     <div>{this.props.amount} tasks</div>
@@ -109,8 +125,8 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
                 <Input type="text" value={this.state.taskName}
                        onKeyDown={this.handleAddTask}
                        onChange={this.handleChangeTaskName}
-                       placeholder="Please Input New Task Name"/>
-            </div>);
+                       placeholder="Add a new task..."/>
+            </Container>);
     }
 
 }
