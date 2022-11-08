@@ -10,16 +10,6 @@ jest.mock("../../default/defaultTaskList.json", () => {
 });
 
 describe('Task Page Test', () => {
-    test('should render todo and completed title', () => {
-        render(
-            <Provider store={store}>
-                <TaskPage/>
-            </Provider>
-        );
-
-        expect(screen.getByText("TodoList Information")).toBeInTheDocument();
-        expect(screen.getByText("CompletedList Information")).toBeInTheDocument();
-    });
 
     test('should add task to todoList when input task name add click button', () => {
         const mockNewTaskName = 'new Task';
