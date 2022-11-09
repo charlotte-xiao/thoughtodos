@@ -5,9 +5,9 @@ import {ACTION_TYPE} from "../../constants/ActionType";
 import {connect} from "react-redux";
 import {TaskAction, TaskDispatch} from "../../store/Store";
 import {Action} from "@reduxjs/toolkit";
-import moment from "moment";
 import TaskList from "../../models/TaskList";
 import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
+import {formatDate} from "../../utils/time";
 
 const Container = styled.div`
   height: 10rem;
@@ -113,7 +113,7 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
     render() {
         return (
             <Container>
-                <NowDate>{moment().format('dddd MMMM D YYYY')}</NowDate>
+                <NowDate>{formatDate(new Date(), '{dayOfWeek} {month} {day} {year}')}</NowDate>
                 <ShowBox>
                     <div>{this.props.amount} tasks</div>
                     {

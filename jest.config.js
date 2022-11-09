@@ -13,6 +13,7 @@ module.exports = {
     "<rootDir>/src/component/**/*.{tsx,ts}",
     "<rootDir>/src/pages/**/*.{tsx,ts}",
     "<rootDir>/src/service/**/*.{tsx,ts}",
+    "<rootDir>/src/utils/**/*.{tsx,ts}",
   ],
   transform: {
     ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
