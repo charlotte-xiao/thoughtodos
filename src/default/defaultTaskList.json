@@ -1,5 +1,5 @@
 {
-  "todoList": [
+  "taskList": [
     {
       "id": 1,
       "name": "todoTask1",
@@ -9,9 +9,7 @@
       "id": 2,
       "name": "todoTask2",
       "isCompleted": false
-    }
-  ],
-  "completedList": [
+    },
     {
       "id": 3,
       "name": "completedTask1",

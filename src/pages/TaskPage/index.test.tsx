@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import {store} from "../../store/Store";
 
 jest.mock("../../default/defaultTaskList.json", () => {
-    return {todoList: [{id: 1, name: "123"}], completedList: []};
+    return {taskList: [{id: 1, name: "123"}]};
 });
 
 describe('Task Page Test', () => {

@@ -137,7 +137,7 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
 
 const mapStateToProps = (state: TaskList) => {
     return {
-        amount: state.todoList.length + state.completedList.length,
+        amount: state.taskList.length,
     }
 }
 

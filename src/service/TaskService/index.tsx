@@ -23,27 +23,20 @@ export default class TaskService {
 
     private addNewTask = (preTaskList: TaskList, input: Task): TaskList => {
         // Todo: Generate Unique ID in Back-End
-        preTaskList.todoList.push({...input, id: new Date().getTime(), isCompleted: false});
+        preTaskList.taskList.push({...input, id: new Date().getTime(), isCompleted: false});
         return {...preTaskList};
     };
 
     private deleteTask = (preTaskList: TaskList, input: Task): TaskList => {
-        const updatedTodoList = preTaskList.todoList.filter((task: Task) => task.id !== input.id);
-        const updatedCompletedList = preTaskList.completedList.filter((task: Task) => task.id !== input.id);
-        return {todoList: updatedTodoList, completedList: updatedCompletedList};
+        const updatedTodoList = preTaskList.taskList.filter((task: Task) => task.id !== input.id);
+        return {taskList: updatedTodoList};
     };
 
     private switchTaskState = (preTaskList: TaskList, input: Task): TaskList => {
-        let updatedTodoList, updatedCompletedList;
         const preTaskState = input.isCompleted;
-        if (preTaskState) {
-            updatedTodoList = preTaskList.todoList.concat({...input, isCompleted: !preTaskState});
-            updatedCompletedList = preTaskList.completedList.filter((task: Task) => task.id !== input.id);
-        } else {
-            updatedTodoList = preTaskList.todoList.filter((task: Task) => task.id !== input.id);
-            updatedCompletedList = preTaskList.completedList.concat({...input, isCompleted: !preTaskState});
-        }
-        return {todoList: updatedTodoList, completedList: updatedCompletedList} as TaskList;
+        const updatedTaskList = preTaskList.taskList.filter((task: Task) => task.id !== input.id)
+            .concat({...input, isCompleted: !preTaskState});
+        return {taskList: updatedTaskList} as TaskList;
     };
 
     executeStrategy = (actionType: ACTION_TYPE, preTaskList: TaskList | undefined, input: Task): TaskList => {

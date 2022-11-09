@@ -40,16 +40,16 @@ class TaskPage extends React.Component<TaskPageProps, TaskPageState> {
 
     render() {
         let filteredTaskList;
-        const {todoList, completedList} = this.props.taskList;
+        const {taskList} = this.props.taskList;
         switch (this.state.taskFilterCondition) {
             case TaskFilterCondition.ACTIVE:
-                filteredTaskList = [...todoList];
+                filteredTaskList = taskList.filter(task => !task.isCompleted);
                 break;
             case TaskFilterCondition.COMPLETED:
-                filteredTaskList = [...completedList];
+                filteredTaskList = taskList.filter(task => task.isCompleted);
                 break
             default:
-                filteredTaskList = todoList.concat(completedList);
+                filteredTaskList = [...taskList];
         }
         return (
             <Content>

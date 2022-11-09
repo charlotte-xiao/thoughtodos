@@ -10,7 +10,7 @@ const Section = styled.ul`
 `
 
 type TaskListProps = {
-    taskList: Array<Task>;
+    taskList: Task[];
 }
 
 export default class TaskListComponent extends React.Component<TaskListProps, never> {
