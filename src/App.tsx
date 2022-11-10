@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 import TaskPage from "./pages/TaskPage";
-import {Provider} from "react-redux";
-import {store} from "./store/Store";
+import { Provider } from "react-redux";
+import { store } from "./store/Store";
 
 const Header = styled.header`
   h1 {
@@ -28,16 +28,16 @@ const Container = styled.div`
 `;
 
 function App() {
-    return (
-        <Container>
-            <Header>
-                <h1>Thoughtodos!</h1>
-            </Header>
-            <Provider store={store}>
-                <TaskPage/>
-            </Provider>
-        </Container>
-    );
+  return (
+    <Container>
+      <Header>
+        <h1>Thoughtodos!</h1>
+      </Header>
+      <Provider store={store}>
+        <TaskPage />
+      </Provider>
+    </Container>
+  );
 }
 
 export default App;
