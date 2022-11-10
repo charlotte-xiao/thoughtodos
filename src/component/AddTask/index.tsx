@@ -116,7 +116,9 @@ class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
           {formatDate(new Date(), "{dayOfWeek} {month} {day} {year}")}
         </NowDate>
         <ShowBox>
-          <div>{this.props.amount} tasks</div>
+          <div>
+            {this.props.amount} {this.props.amount <= 1 ? "task" : "tasks"}
+          </div>
           {Object.entries(TaskFilterCondition).map((condition) => (
             <Button
               type="button"
