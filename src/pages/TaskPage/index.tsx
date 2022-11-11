@@ -4,29 +4,57 @@ import TaskListComponent from "../../component/TaskList";
 import AddTaskComponent from "../../component/AddTask";
 import {connect} from "react-redux";
 import TaskList from "../../models/TaskList";
-
-const Title = styled.h2`
-  text-align: left;
-`
+import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
 
 const Content = styled.div`
-  margin: 2rem 5rem;
+  background-color: white;
+  width: 60vh;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 3rem;
+  text-align: center;
 `
 
 type TaskPageProps = {
     taskList: TaskList
 }
 
-class TaskPage extends React.Component<TaskPageProps, never> {
+type TaskPageState = {
+    taskFilterCondition: number
+}
+
+class TaskPage extends React.Component<TaskPageProps, TaskPageState> {
+
+    constructor(props: TaskPageProps) {
+        super(props);
+        this.state = {
+            taskFilterCondition: TaskFilterCondition.ALL
+        }
+    }
+
+    changeTaskFilterCondition = (taskFilterCondition: number) => {
+        this.setState({
+            taskFilterCondition: taskFilterCondition
+        });
+    }
 
     render() {
+        let filteredTaskList;
+        const {taskList} = this.props.taskList;
+        switch (this.state.taskFilterCondition) {
+            case TaskFilterCondition.ACTIVE:
+                filteredTaskList = taskList.filter(task => !task.isCompleted);
+                break;
+            case TaskFilterCondition.COMPLETED:
+                filteredTaskList = taskList.filter(task => task.isCompleted);
+                break
+            default:
+                filteredTaskList = [...taskList];
+        }
         return (
             <Content>
-                <AddTaskComponent/>
-                <Title><span>· </span>TodoList Information</Title>
-                <TaskListComponent taskList={this.props.taskList.todoList}/>
-                <Title><span>· </span>CompletedList Information</Title>
-                <TaskListComponent taskList={this.props.taskList.completedList}/>
+                <AddTaskComponent changeTaskFilterCondition={this.changeTaskFilterCondition}/>
+                <TaskListComponent taskList={filteredTaskList}/>
             </Content>
         );
     }

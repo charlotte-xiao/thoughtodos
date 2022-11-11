@@ -4,28 +4,15 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.0",
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.7",
-    "@types/react-redux": "^7.1.24",
-    "jest": "^27.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
-    "react-scripts": "5.0.1",
-    "styled-components": "^5.3.6",
-    "ts-jest": "^27.1.4",
-    "typescript": "^4.8.4",
-    "web-vitals": "^2.1.4"
+    "styled-components": "^5.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --fix",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet"
@@ -49,10 +36,23 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.0",
+    "@types/react": "^18.0.23",
+    "@types/react-dom": "^18.0.7",
+    "@types/react-redux": "^7.1.24",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "8.22.0",
-    "eslint-plugin-react": "^7.31.10"
+    "eslint-plugin-react": "^7.31.10",
+    "jest": "^27.5.1",
+    "jest-transform-stub": "^2.0.0",
+    "react-scripts": "5.0.1",
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.8.4"
   }
 }

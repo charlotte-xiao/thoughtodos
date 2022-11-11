@@ -4,17 +4,13 @@ import styled from "styled-components";
 import TaskItemComponent from "../TaskItem";
 
 const Section = styled.ul`
-  border-style: solid;
-  border-width: 0.25rem;
-  border-color: rgb(237, 242, 247);
-  border-radius: 0.5rem;
   padding: 0;
   display: flex;
   flex-direction: column;
 `
 
 type TaskListProps = {
-    taskList: Array<Task>;
+    taskList: Task[];
 }
 
 export default class TaskListComponent extends React.Component<TaskListProps, never> {

@@ -7,7 +7,7 @@ import {store} from "../../store/Store";
 
 describe('TaskList Test', () => {
     test('should render TaskList', () => {
-        const mockTaskList: Array<Task> = [
+        const mockTaskList: Task[] = [
             {id: 1, name: 'task1', isCompleted: false},
             {id: 2, name: 'task2', isCompleted: false},
         ]

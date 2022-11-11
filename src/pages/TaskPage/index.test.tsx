@@ -6,22 +6,12 @@ import {Provider} from "react-redux";
 import {store} from "../../store/Store";
 
 jest.mock("../../default/defaultTaskList.json", () => {
-    return {todoList: [{id: 1, name: "123"}], completedList: []};
+    return {taskList: [{id: 1, name: "123"}]};
 });
 
 describe('Task Page Test', () => {
-    test('should render todo and completed title', () => {
-        render(
-            <Provider store={store}>
-                <TaskPage/>
-            </Provider>
-        );
 
-        expect(screen.getByText("TodoList Information")).toBeInTheDocument();
-        expect(screen.getByText("CompletedList Information")).toBeInTheDocument();
-    });
-
-    test('should add task to todoList when input task name add click button', () => {
+    test('should add task to todoList when input task name and enter', () => {
         const mockNewTaskName = 'new Task';
 
         render(
@@ -30,7 +20,7 @@ describe('Task Page Test', () => {
             </Provider>
         );
         userEvent.type(screen.getByRole('textbox'), mockNewTaskName);
-        userEvent.click(screen.getByRole('button', {name: 'Add Task'}));
+        userEvent.type(screen.getByRole('textbox'), "{enter}");
 
         const taskItems = screen.getAllByTestId('task-item');
         expect(taskItems).toHaveLength(2);

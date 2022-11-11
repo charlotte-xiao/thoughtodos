@@ -5,12 +5,19 @@ import {Provider} from "react-redux";
 import {store} from "../../store/Store";
 
 describe('AddTask Test', () => {
-    test('should render add button and input', () => {
+    test('should render input', () => {
 
-        render(<Provider store={store}><AddTaskComponent/></Provider>);
+        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
 
-        expect(screen.getByRole('button', {name: 'Add Task'})).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toBeInTheDocument();
+
+    });
+
+    test('should calculate current task amounts', () => {
+
+        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
+
+        expect(screen.getByText('4 tasks')).toBeInTheDocument();
 
     });
 });

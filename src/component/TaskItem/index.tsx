@@ -10,16 +10,23 @@ import {connect} from "react-redux";
 const Item = styled.li`
   height: 4rem;
   line-height: 4rem;
+  border-top: 0.1rem solid rgb(237, 242, 247);
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   list-style: none;
 
-  .is_completed {
-    color: #E2E8F0;;
-    text-decoration: line-through;
+  &.is_completed {
+    background-color: #effaf6;
+    text-decoration: line-through wavy #d8d7d7;
   }
+
+  input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
 `
 
 const Info = styled.div`
@@ -58,14 +65,14 @@ class TaskItemComponent extends React.Component<TaskProps, never> {
 
     render() {
         return (
-            <Item data-testid='task-item'>
+            <Item data-testid='task-item' className={this.props.task.isCompleted ? 'is_completed' : ''}>
                 <input
                     type="checkbox"
                     defaultChecked={this.props.task.isCompleted}
                     className="input-checkbox"
                     onClick={this.handleSwitchTaskState}
                 />
-                <Info className={this.props.task.isCompleted ? 'is_completed' : ''}>{this.props.task.name}</Info>
+                <Info>{this.props.task.name}</Info>
                 <Img src={DeleteImageURL} alt="Delete Task" onClick={this.handleDeleteTask}/>
             </Item>
 
