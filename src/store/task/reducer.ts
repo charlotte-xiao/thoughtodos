@@ -2,7 +2,7 @@ import defaultTaskList from "../../default/defaultTaskList.json";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import TaskService from "../../service/TaskService";
 import Task from "../../models/Task";
-import TaskList from "../../models/TaskList";
+import TaskStore from "../../models/TaskStore";
 import { ACTION_TYPE } from "../../constants/ActionType";
 
 export type TaskAction = {
@@ -10,14 +10,14 @@ export type TaskAction = {
   task: Task;
 };
 
-const initialState = defaultTaskList as TaskList;
+const initialState = defaultTaskList as TaskStore;
 
 const taskListSlice = createSlice({
   name: "taskList",
   initialState,
   reducers: {
     updateTaskList: (
-      state: TaskList,
+      state: TaskStore,
       actionParams: PayloadAction<TaskAction>
     ) => {
       const taskService = new TaskService();

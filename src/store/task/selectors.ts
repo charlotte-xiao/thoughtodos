@@ -1,7 +1,7 @@
 import { RootState } from "../index";
-import TaskList from "../../models/TaskList";
+import TaskStore from "../../models/TaskStore";
 
-export const getTaskList = (state: RootState): TaskList => {
+export const getTaskList = (state: RootState): TaskStore => {
   return state.task;
 };
 

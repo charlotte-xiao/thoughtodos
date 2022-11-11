@@ -1,5 +1,5 @@
 import { ACTION_TYPE } from "../../constants/ActionType";
-import TaskList from "../../models/TaskList";
+import TaskStore from "../../models/TaskStore";
 import Task from "../../models/Task";
 import defaultTaskList from "../../default/defaultTaskList.json";
 
@@ -16,11 +16,11 @@ export default class TaskService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private getTaskList = (preTaskList: TaskList, input: Task): TaskList => {
+  private getTaskList = (preTaskList: TaskStore, input: Task): TaskStore => {
     return defaultTaskList;
   };
 
-  private addNewTask = (preTaskList: TaskList, input: Task): TaskList => {
+  private addNewTask = (preTaskList: TaskStore, input: Task): TaskStore => {
     // Todo: Generate Unique ID in Back-End
     preTaskList.taskList.push({
       ...input,
@@ -30,30 +30,30 @@ export default class TaskService {
     return preTaskList;
   };
 
-  private deleteTask = (preTaskList: TaskList, input: Task): TaskList => {
+  private deleteTask = (preTaskList: TaskStore, input: Task): TaskStore => {
     const updatedTodoList = preTaskList.taskList.filter(
       (task: Task) => task.id !== input.id
     );
-    return { taskList: updatedTodoList };
+    return { ...preTaskList, taskList: updatedTodoList };
   };
 
-  private switchTaskState = (preTaskList: TaskList, input: Task): TaskList => {
+  private switchTaskState = (
+    preTaskList: TaskStore,
+    input: Task
+  ): TaskStore => {
     const preTaskState = input.isCompleted;
     const updatedTaskList = preTaskList.taskList
       .filter((task: Task) => task.id !== input.id)
       .concat({ ...input, isCompleted: !preTaskState });
-    return { taskList: updatedTaskList } as TaskList;
+    return { ...preTaskList, taskList: updatedTaskList };
   };
 
   executeStrategy = (
     actionType: ACTION_TYPE,
-    preTaskList: TaskList | undefined,
+    preTaskList: TaskStore,
     input: Task
-  ): TaskList => {
+  ): TaskStore => {
     actionType = actionType ?? ACTION_TYPE.DEFAULT;
-    return this.taskStrategyMap[actionType](
-      preTaskList ?? ({} as TaskList),
-      input
-    );
+    return this.taskStrategyMap[actionType](preTaskList, input);
   };
 }

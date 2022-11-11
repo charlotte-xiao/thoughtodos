@@ -1,11 +1,12 @@
 import TaskService from "./index";
 import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
+import { FILTER_CONDITION } from "../../constants/FilterCondition";
 
 describe("Task Service", () => {
   test("should add new Task", () => {
     const taskService = new TaskService();
-    const preTaskList = { taskList: [] };
+    const preTaskList = { taskList: [], filterCondition: FILTER_CONDITION.ALL };
     const newTask = { name: "new Task" } as Task;
 
     const updatedTaskList = taskService.executeStrategy(
@@ -21,7 +22,10 @@ describe("Task Service", () => {
   test("should switch Task State", () => {
     const taskService = new TaskService();
     const todoTask = { id: 1, name: "new Task", isCompleted: false };
-    const preTaskList = { taskList: [todoTask] };
+    const preTaskList = {
+      taskList: [todoTask],
+      filterCondition: FILTER_CONDITION.ALL,
+    };
 
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.SWITCH_TASK_STATE,
@@ -40,7 +44,7 @@ describe("Task Service", () => {
   test("should delete Task", () => {
     const taskService = new TaskService();
     const completedTask = { id: 1, name: "new Task", isCompleted: true };
-    const preTaskList = { taskList: [] };
+    const preTaskList = { taskList: [], filterCondition: FILTER_CONDITION.ALL };
 
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.DELETE_TASK,
