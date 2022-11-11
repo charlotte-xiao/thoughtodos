@@ -8,6 +8,6 @@ describe("time utils", () => {
 
     const formatDateString = formatDate(date, formatString);
 
-    expect(formatDateString).toEqual("Tuesday November 1 2022 0:0:0");
+    expect(formatDateString).toBe("Tuesday November 1 2022 0:0:0");
   });
 });

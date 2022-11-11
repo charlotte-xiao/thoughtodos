@@ -2,9 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import taskReducer from "./task/reducer";
 
-export const reducer = combineReducers({
-  taskReducer: taskReducer,
-});
+export const reducer = combineReducers({ taskReducer });
 
 const store = configureStore({
   reducer,

@@ -16,7 +16,7 @@ describe("Task Service", () => {
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
-    expect(updatedTaskList.taskList[0].name).toEqual(newTask.name);
+    expect(updatedTaskList.taskList[0].name).toBe(newTask.name);
   });
 
   test("should switch Task State", () => {
@@ -34,11 +34,9 @@ describe("Task Service", () => {
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
-    expect(updatedTaskList.taskList[0].id).toEqual(todoTask.id);
-    expect(updatedTaskList.taskList[0].name).toEqual(todoTask.name);
-    expect(updatedTaskList.taskList[0].isCompleted).toEqual(
-      !todoTask.isCompleted
-    );
+    expect(updatedTaskList.taskList[0].id).toBe(todoTask.id);
+    expect(updatedTaskList.taskList[0].name).toBe(todoTask.name);
+    expect(updatedTaskList.taskList[0].isCompleted).toBe(!todoTask.isCompleted);
   });
 
   test("should delete Task", () => {
