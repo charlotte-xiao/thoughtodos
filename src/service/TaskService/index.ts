@@ -22,7 +22,7 @@ export default class TaskService {
 
   private addNewTask = (preTaskList: TaskStore, input: Task): TaskStore => {
     // Todo: Generate Unique ID in Back-End
-    preTaskList.taskList.push({
+    preTaskList.taskList.unshift({
       ...input,
       id: new Date().getTime(),
       isCompleted: false,
@@ -42,9 +42,15 @@ export default class TaskService {
     input: Task
   ): TaskStore => {
     const preTaskState = input.isCompleted;
-    const updatedTaskList = preTaskList.taskList
-      .filter((task: Task) => task.id !== input.id)
-      .concat({ ...input, isCompleted: !preTaskState });
+    const updateTask = { ...input, isCompleted: !preTaskState };
+    const updatedTaskList = preTaskList.taskList.filter(
+      (task: Task) => task.id !== input.id
+    );
+    if (preTaskState) {
+      updatedTaskList.unshift(updateTask);
+    } else {
+      updatedTaskList.push(updateTask);
+    }
     return { ...preTaskList, taskList: updatedTaskList };
   };
 

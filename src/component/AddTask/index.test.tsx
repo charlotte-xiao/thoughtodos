@@ -8,7 +8,7 @@ describe("AddTask Test", () => {
   test("should render input", () => {
     render(
       <Provider store={store}>
-        <AddTaskComponent changeTaskFilterCondition={jest.fn()} />
+        <AddTaskComponent />
       </Provider>
     );
 
@@ -18,7 +18,7 @@ describe("AddTask Test", () => {
   test("should calculate current task amounts", () => {
     render(
       <Provider store={store}>
-        <AddTaskComponent changeTaskFilterCondition={jest.fn()} />
+        <AddTaskComponent />
       </Provider>
     );
 

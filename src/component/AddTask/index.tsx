@@ -10,8 +10,13 @@ import { ACTION_TYPE } from "../../constants/ActionType";
 import { FILTER_CONDITION } from "../../constants/FilterCondition";
 import { formatDate } from "../../utils/time";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { TaskAction, updateTaskList } from "../../store/task/reducer";
-import { getAmount } from "../../store/task/selectors";
+import {
+  FilterConditionAction,
+  TaskAction,
+  updateFilterCondition,
+  updateTaskList,
+} from "../../store/task/reducer";
+import { getAmount, getFilterCondition } from "../../store/task/selectors";
 
 const Container = styled.div`
   height: 10rem;
@@ -74,19 +79,12 @@ const Input = styled.input`
     border-bottom: 0.1rem solid gray;
   }
 `;
-type AddTaskProps = {
-  changeTaskFilterCondition(taskFilterCondition: number): void;
-};
 
-export const AddTaskComponent: FunctionComponent<AddTaskProps> = ({
-  changeTaskFilterCondition,
-}: AddTaskProps) => {
+export const AddTaskComponent: FunctionComponent = () => {
   const [taskName, setTaskName] = useState("");
-  const [taskFilterCondition, setTaskFilterCondition] = useState(
-    FILTER_CONDITION.ALL
-  );
   const dispatch = useAppDispatch();
   const amount = useAppSelector(getAmount);
+  const filterCondition = useAppSelector(getFilterCondition);
 
   const dispatchAddTask = (taskName: string) => {
     const taskAction: TaskAction = {
@@ -108,8 +106,10 @@ export const AddTaskComponent: FunctionComponent<AddTaskProps> = ({
   };
 
   const handleChangeTaskFilterCondition = (condition: number) => {
-    setTaskFilterCondition(condition);
-    changeTaskFilterCondition(condition);
+    const filterConditionAction: FilterConditionAction = {
+      filterCondition: condition,
+    };
+    dispatch(updateFilterCondition(filterConditionAction));
   };
 
   return (
@@ -126,7 +126,7 @@ export const AddTaskComponent: FunctionComponent<AddTaskProps> = ({
             type="button"
             value={condition[0]}
             key={condition[1]}
-            className={condition[1] === taskFilterCondition ? "is_active" : ""}
+            className={condition[1] === filterCondition ? "is_active" : ""}
             onClick={() => {
               handleChangeTaskFilterCondition(condition[1]);
             }}

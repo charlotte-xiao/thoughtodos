@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import taskReducer from "./task/reducer";
 
 export const reducer = combineReducers({
-  task: taskReducer,
+  taskReducer: taskReducer,
 });
 
 const store = configureStore({

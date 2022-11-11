@@ -10,7 +10,12 @@ export type TaskAction = {
   task: Task;
 };
 
+export type FilterConditionAction = {
+  filterCondition: number;
+};
+
 const initialState = defaultTaskList as TaskStore;
+const taskService = new TaskService();
 
 const taskListSlice = createSlice({
   name: "taskList",
@@ -20,16 +25,24 @@ const taskListSlice = createSlice({
       state: TaskStore,
       actionParams: PayloadAction<TaskAction>
     ) => {
-      const taskService = new TaskService();
       return taskService.executeStrategy(
         actionParams.payload.actionType,
         state,
         actionParams.payload.task
       );
     },
+    updateFilterCondition: (
+      state: TaskStore,
+      actionParams: PayloadAction<FilterConditionAction>
+    ) => {
+      return {
+        ...state,
+        filterCondition: actionParams.payload.filterCondition,
+      };
+    },
   },
 });
 
-export const { updateTaskList } = taskListSlice.actions;
+export const { updateTaskList, updateFilterCondition } = taskListSlice.actions;
 
 export default taskListSlice.reducer;
