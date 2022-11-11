@@ -3,7 +3,7 @@ import React from "react";
 import TaskListComponent from "./index";
 import Task from "../../models/Task";
 import { Provider } from "react-redux";
-import { store } from "../../store/Store";
+import store from "../../store";
 
 describe("TaskList Test", () => {
   test("should render TaskList", () => {

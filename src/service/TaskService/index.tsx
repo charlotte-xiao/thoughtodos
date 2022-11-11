@@ -27,7 +27,7 @@ export default class TaskService {
       id: new Date().getTime(),
       isCompleted: false,
     });
-    return { ...preTaskList };
+    return preTaskList;
   };
 
   private deleteTask = (preTaskList: TaskList, input: Task): TaskList => {

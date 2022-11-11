@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import TaskListComponent from "../../component/TaskList";
-import AddTaskComponent from "../../component/AddTask";
-import { connect } from "react-redux";
-import TaskList from "../../models/TaskList";
+import { AddTaskComponent } from "../../component/AddTask";
 import { TaskFilterCondition } from "../../constants/TaskFilterCondition";
+import { useAppSelector } from "../../store";
+import { getTaskList } from "../../store/task/selectors";
 
 const Content = styled.div`
   background-color: white;
@@ -15,56 +15,32 @@ const Content = styled.div`
   text-align: center;
 `;
 
-type TaskPageProps = {
-  taskList: TaskList;
-};
+export const TaskPage: FunctionComponent = () => {
+  const [taskFilterCondition, setTaskFilterCondition] = useState(
+    TaskFilterCondition.ALL
+  );
 
-type TaskPageState = {
-  taskFilterCondition: number;
-};
-
-class TaskPage extends React.Component<TaskPageProps, TaskPageState> {
-  constructor(props: TaskPageProps) {
-    super(props);
-    this.state = {
-      taskFilterCondition: TaskFilterCondition.ALL,
-    };
-  }
-
-  changeTaskFilterCondition = (taskFilterCondition: number) => {
-    this.setState({
-      taskFilterCondition: taskFilterCondition,
-    });
+  const changeTaskFilterCondition = (taskFilterCondition: number) => {
+    setTaskFilterCondition(taskFilterCondition);
   };
 
-  render() {
-    let filteredTaskList;
-    const { taskList } = this.props.taskList;
-    switch (this.state.taskFilterCondition) {
-      case TaskFilterCondition.ACTIVE:
-        filteredTaskList = taskList.filter((task) => !task.isCompleted);
-        break;
-      case TaskFilterCondition.COMPLETED:
-        filteredTaskList = taskList.filter((task) => task.isCompleted);
-        break;
-      default:
-        filteredTaskList = [...taskList];
-    }
-    return (
-      <Content>
-        <AddTaskComponent
-          changeTaskFilterCondition={this.changeTaskFilterCondition}
-        />
-        <TaskListComponent taskList={filteredTaskList} />
-      </Content>
-    );
+  let filteredTaskList;
+  const taskList = useAppSelector(getTaskList);
+  switch (taskFilterCondition) {
+    case TaskFilterCondition.ACTIVE:
+      filteredTaskList = taskList.taskList.filter((task) => !task.isCompleted);
+      break;
+    case TaskFilterCondition.COMPLETED:
+      filteredTaskList = taskList.taskList.filter((task) => task.isCompleted);
+      break;
+    default:
+      filteredTaskList = [...taskList.taskList];
   }
-}
 
-const mapStateToProps = (state: TaskList) => {
-  return {
-    taskList: state,
-  };
+  return (
+    <Content>
+      <AddTaskComponent changeTaskFilterCondition={changeTaskFilterCondition} />
+      <TaskListComponent taskList={filteredTaskList} />
+    </Content>
+  );
 };
-
-export default connect(mapStateToProps)(TaskPage);

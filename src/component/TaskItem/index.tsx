@@ -1,11 +1,10 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import DeleteImageURL from "../../assets/delete.png";
 import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
-import { TaskAction, TaskDispatch } from "../../store/Store";
-import { Action } from "@reduxjs/toolkit";
-import { connect } from "react-redux";
+import { TaskAction, updateTaskList } from "../../store/task/reducer";
+import { useAppDispatch } from "../../store";
 
 const Item = styled.li`
   height: 4rem;
@@ -48,63 +47,44 @@ const Img = styled.img`
 
 type TaskProps = {
   task: Task;
-  handleDeleteTask(id: number): void;
-  handleSwitchTaskState(task: Task): void;
 };
 
-class TaskItemComponent extends React.Component<TaskProps, never> {
-  handleDeleteTask = () => {
-    this.props.handleDeleteTask(this.props.task.id);
+const TaskItemComponent: FunctionComponent<TaskProps> = ({
+  task,
+}: TaskProps) => {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteTask = () => {
+    const taskAction: TaskAction = {
+      actionType: ACTION_TYPE.DELETE_TASK,
+      task: { id: task.id } as Task,
+    };
+    dispatch(updateTaskList(taskAction));
   };
 
-  handleSwitchTaskState = () => {
-    this.props.handleSwitchTaskState(this.props.task);
+  const handleSwitchTaskState = () => {
+    const taskAction: TaskAction = {
+      actionType: ACTION_TYPE.SWITCH_TASK_STATE,
+      task: task,
+    };
+    dispatch(updateTaskList(taskAction));
   };
 
-  render() {
-    return (
-      <Item
-        data-testid="task-item"
-        className={this.props.task.isCompleted ? "is_completed" : ""}
-      >
-        <input
-          type="checkbox"
-          defaultChecked={this.props.task.isCompleted}
-          className="input-checkbox"
-          onClick={this.handleSwitchTaskState}
-        />
-        <Info>{this.props.task.name}</Info>
-        <Img
-          src={DeleteImageURL}
-          alt="Delete Task"
-          onClick={this.handleDeleteTask}
-        />
-      </Item>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: TaskDispatch) => {
-  return {
-    handleDeleteTask: (id: number) => {
-      const taskAction: Action<TaskAction> = {
-        type: {
-          actionType: ACTION_TYPE.DELETE_TASK,
-          task: { id: id } as Task,
-        },
-      };
-      dispatch(taskAction);
-    },
-    handleSwitchTaskState: (task: Task) => {
-      const taskAction: Action<TaskAction> = {
-        type: {
-          actionType: ACTION_TYPE.SWITCH_TASK_STATE,
-          task: task,
-        },
-      };
-      dispatch(taskAction);
-    },
-  };
+  return (
+    <Item
+      data-testid="task-item"
+      className={task.isCompleted ? "is_completed" : ""}
+    >
+      <input
+        type="checkbox"
+        defaultChecked={task.isCompleted}
+        className="input-checkbox"
+        onClick={handleSwitchTaskState}
+      />
+      <Info>{task.name}</Info>
+      <Img src={DeleteImageURL} alt="Delete Task" onClick={handleDeleteTask} />
+    </Item>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(TaskItemComponent);
+export default TaskItemComponent;

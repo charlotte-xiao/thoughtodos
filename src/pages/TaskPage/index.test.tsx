@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import TaskPage from "./index";
+import { TaskPage } from "./index";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
-import { store } from "../../store/Store";
+import store from "../../store";
 
 jest.mock("../../default/defaultTaskList.json", () => {
   return { taskList: [{ id: 1, name: "123" }] };
@@ -22,6 +22,7 @@ describe("Task Page Test", () => {
     userEvent.type(screen.getByRole("textbox"), "{enter}");
 
     const taskItems = screen.getAllByTestId("task-item");
+
     expect(taskItems).toHaveLength(2);
     expect(screen.getByText(mockNewTaskName)).toBeInTheDocument();
   });

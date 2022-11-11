@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import TaskPage from "./pages/TaskPage";
+import { TaskPage } from "./pages/TaskPage";
 import { Provider } from "react-redux";
-import { store } from "./store/Store";
+import store from "./store";
 
 const Header = styled.header`
   h1 {

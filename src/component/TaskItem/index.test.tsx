@@ -3,7 +3,7 @@ import React from "react";
 import Task from "../../models/Task";
 import TaskItemComponent from "./index";
 import { Provider } from "react-redux";
-import { store } from "../../store/Store";
+import store from "../../store";
 
 describe("TaskItem Test", () => {
   test("should render Todo Task", () => {
