@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { AddTaskComponent } from "./index";
 import { Provider } from "react-redux";
+import { AddTaskComponent } from "./index";
 import store from "../../store";
 
 describe("AddTask Test", () => {

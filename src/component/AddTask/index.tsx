@@ -7,7 +7,7 @@ import React, {
 import Task from "../../models/Task";
 import styled from "styled-components";
 import { ACTION_TYPE } from "../../constants/ActionType";
-import { FilterCondition } from "../../constants/FilterCondition";
+import { FILTER_CONDITION } from "../../constants/FilterCondition";
 import { formatDate } from "../../utils/time";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { TaskAction, updateTaskList } from "../../store/task/reducer";
@@ -83,7 +83,7 @@ export const AddTaskComponent: FunctionComponent<AddTaskProps> = ({
 }: AddTaskProps) => {
   const [taskName, setTaskName] = useState("");
   const [taskFilterCondition, setTaskFilterCondition] = useState(
-    FilterCondition.ALL
+    FILTER_CONDITION.ALL
   );
   const dispatch = useAppDispatch();
   const amount = useAppSelector(getAmount);
@@ -121,7 +121,7 @@ export const AddTaskComponent: FunctionComponent<AddTaskProps> = ({
         <div>
           {amount} {amount <= 1 ? "task" : "tasks"}
         </div>
-        {Object.entries(FilterCondition).map((condition) => (
+        {Object.entries(FILTER_CONDITION).map((condition) => (
           <Button
             type="button"
             value={condition[0]}

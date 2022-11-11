@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
 import React from "react";
 import Task from "../../models/Task";
 import TaskItemComponent from "./index";
-import { Provider } from "react-redux";
 import store from "../../store";
 
 describe("TaskItem Test", () => {

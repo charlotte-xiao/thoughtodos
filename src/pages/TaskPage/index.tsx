@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import TaskListComponent from "../../component/TaskList";
 import { AddTaskComponent } from "../../component/AddTask";
-import { FilterCondition } from "../../constants/FilterCondition";
+import { FILTER_CONDITION } from "../../constants/FilterCondition";
 import { useAppSelector } from "../../store";
 import { getTaskList } from "../../store/task/selectors";
 
@@ -17,7 +17,7 @@ const Content = styled.div`
 
 export const TaskPage: FunctionComponent = () => {
   const [taskFilterCondition, setTaskFilterCondition] = useState(
-    FilterCondition.ALL
+    FILTER_CONDITION.ALL
   );
 
   const changeTaskFilterCondition = (taskFilterCondition: number) => {
@@ -27,10 +27,10 @@ export const TaskPage: FunctionComponent = () => {
   let filteredTaskList;
   const taskList = useAppSelector(getTaskList);
   switch (taskFilterCondition) {
-    case FilterCondition.ACTIVE:
+    case FILTER_CONDITION.ACTIVE:
       filteredTaskList = taskList.taskList.filter((task) => !task.isCompleted);
       break;
-    case FilterCondition.COMPLETED:
+    case FILTER_CONDITION.COMPLETED:
       filteredTaskList = taskList.taskList.filter((task) => task.isCompleted);
       break;
     default:

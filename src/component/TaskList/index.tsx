@@ -1,7 +1,7 @@
 import React from "react";
-import Task from "../../models/Task";
 import styled from "styled-components";
 import TaskItemComponent from "../TaskItem";
+import Task from "../../models/Task";
 
 const Section = styled.ul`
   padding: 0;
