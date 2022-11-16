@@ -17,34 +17,34 @@ export default class TaskService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private getTaskList = (preTaskList: TaskStore, input: Task): TaskStore => {
+  private getTaskList = (preTaskStore: TaskStore, input: Task): TaskStore => {
     return defaultTaskList;
   };
 
-  private addNewTask = (preTaskList: TaskStore, input: Task): TaskStore => {
+  private addNewTask = (preTaskStore: TaskStore, input: Task): TaskStore => {
     // Todo: Generate Unique ID in Back-End
-    preTaskList.taskList.unshift({
+    preTaskStore.taskList.unshift({
       ...input,
       id: new Date().getTime(),
       isCompleted: false,
     });
-    return preTaskList;
+    return preTaskStore;
   };
 
-  private deleteTask = (preTaskList: TaskStore, input: Task): TaskStore => {
-    const updatedTodoList = preTaskList.taskList.filter(
+  private deleteTask = (preTaskStore: TaskStore, input: Task): TaskStore => {
+    const updatedTodoList = preTaskStore.taskList.filter(
       (task: Task) => task.id !== input.id
     );
-    return { ...preTaskList, taskList: updatedTodoList };
+    return { ...preTaskStore, taskList: updatedTodoList };
   };
 
   private switchTaskState = (
-    preTaskList: TaskStore,
+    preTaskStore: TaskStore,
     input: Task
   ): TaskStore => {
     const preTaskState = input.isCompleted;
     const updateTask = { ...input, isCompleted: !preTaskState };
-    const updatedTaskList = preTaskList.taskList.filter(
+    const updatedTaskList = preTaskStore.taskList.filter(
       (task: Task) => task.id !== input.id
     );
     if (preTaskState) {
@@ -52,22 +52,25 @@ export default class TaskService {
     } else {
       updatedTaskList.push(updateTask);
     }
-    return { ...preTaskList, taskList: updatedTaskList };
+    return { ...preTaskStore, taskList: updatedTaskList };
   };
 
-  private updateTaskName = (preTaskList: TaskStore, input: Task): TaskStore => {
-    const updatedTaskList = preTaskList.taskList.map((task: Task) =>
+  private updateTaskName = (
+    preTaskStore: TaskStore,
+    input: Task
+  ): TaskStore => {
+    const updatedTaskList = preTaskStore.taskList.map((task: Task) =>
       task.id === input.id ? { ...task, name: input.name } : task
     );
-    return { ...preTaskList, taskList: updatedTaskList };
+    return { ...preTaskStore, taskList: updatedTaskList };
   };
 
   executeStrategy = (
     actionType: ACTION_TYPE,
-    preTaskList: TaskStore,
+    preTaskStore: TaskStore,
     input: Task
   ): TaskStore => {
     actionType = actionType ?? ACTION_TYPE.DEFAULT;
-    return this.taskStrategyMap[actionType](preTaskList, input);
+    return this.taskStrategyMap[actionType](preTaskStore, input);
   };
 }
