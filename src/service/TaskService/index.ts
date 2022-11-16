@@ -12,6 +12,7 @@ export default class TaskService {
       [ACTION_TYPE.ADD_TASK]: this.addNewTask,
       [ACTION_TYPE.DELETE_TASK]: this.deleteTask,
       [ACTION_TYPE.SWITCH_TASK_STATE]: this.switchTaskState,
+      [ACTION_TYPE.UPDATE_TASK_NAME]: this.updateTaskName,
     };
   }
 
@@ -51,6 +52,13 @@ export default class TaskService {
     } else {
       updatedTaskList.push(updateTask);
     }
+    return { ...preTaskList, taskList: updatedTaskList };
+  };
+
+  private updateTaskName = (preTaskList: TaskStore, input: Task): TaskStore => {
+    const updatedTaskList = preTaskList.taskList.map((task: Task) =>
+      task.id === input.id ? { ...task, name: input.name } : task
+    );
     return { ...preTaskList, taskList: updatedTaskList };
   };
 

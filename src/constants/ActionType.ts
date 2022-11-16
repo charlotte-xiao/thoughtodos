@@ -3,4 +3,5 @@ export enum ACTION_TYPE {
   ADD_TASK = 1,
   DELETE_TASK = 2,
   SWITCH_TASK_STATE = 3,
+  UPDATE_TASK_NAME = 4,
 }
