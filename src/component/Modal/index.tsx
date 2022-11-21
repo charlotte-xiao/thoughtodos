@@ -47,7 +47,7 @@ const Btn = styled.button`
     background-color: rgb(237, 242, 247);
   }
 
-  &.save {
+  &.submit {
     color: white;
     background-color: rgb(68, 157, 217);
   }
@@ -64,33 +64,38 @@ type Props = {
   title: string;
   children: React.ReactNode;
   closeModal: () => void;
+  commit: () => void;
 };
 
-const Modal = React.memo(({ id, title, children, closeModal }: Props) => {
-  const domEl = document.getElementById(id);
+const Modal = React.memo(
+  ({ id, title, children, closeModal, commit }: Props) => {
+    const domEl = document.getElementById(id);
 
-  if (!domEl) return null;
-  return ReactDOM.createPortal(
-    <MaskModal>
-      <DialogModal>
-        <div>
-          <Title>{title}</Title>
-          <Btn className="close" onClick={closeModal}>
-            X
-          </Btn>
-        </div>
-        <div>{children}</div>
-        <div>
-          <Btn className="cancel" onClick={closeModal}>
-            Cancel
-          </Btn>
-          <Btn className="save">Save</Btn>
-        </div>
-      </DialogModal>
-    </MaskModal>,
-    domEl
-  );
-});
+    if (!domEl) return null;
+    return ReactDOM.createPortal(
+      <MaskModal>
+        <DialogModal>
+          <div>
+            <Title>{title}</Title>
+            <Btn className="close" onClick={closeModal}>
+              X
+            </Btn>
+          </div>
+          <div>{children}</div>
+          <div>
+            <Btn className="cancel" onClick={closeModal}>
+              Cancel
+            </Btn>
+            <Btn className="commit" onClick={commit}>
+              Commit
+            </Btn>
+          </div>
+        </DialogModal>
+      </MaskModal>,
+      domEl
+    );
+  }
+);
 
 Modal.displayName = "Modal";
 

@@ -1,8 +1,11 @@
-import React, { FunctionComponent } from "react";
+import React, { ChangeEvent, FunctionComponent, useState } from "react";
 import { useModal } from "../../hook/useModal";
 import styled from "styled-components";
 import EditImageURL from "../../assets/edit.png";
 import Task from "../../models/Task";
+import { TaskAction, updateTaskList } from "../../store/task/reducer";
+import { ACTION_TYPE } from "../../constants/ActionType";
+import { useAppDispatch } from "../../store";
 
 const Content = styled.div`
   display: flex;
@@ -50,9 +53,24 @@ type TaskEditionProps = {
 export const TaskEdition: FunctionComponent<TaskEditionProps> = ({
   task,
 }: TaskEditionProps) => {
+  const dispatch = useAppDispatch();
+  const [taskName, setTaskName] = useState(task.name);
+
+  // todo: 性能问题 - 每次更新信息后要卡顿一下
+  const handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskName(event.target.value);
+  };
+
   const modalProps = {
     title: "Update Task",
     id: `modal-edition-${task.id}`,
+    preHandle: () => {
+      const taskAction: TaskAction = {
+        actionType: ACTION_TYPE.UPDATE_TASK_NAME,
+        task: { ...task, name: taskName },
+      };
+      dispatch(updateTaskList(taskAction));
+    },
   };
   const { show, RenderModal } = useModal(modalProps);
   return (
@@ -62,11 +80,15 @@ export const TaskEdition: FunctionComponent<TaskEditionProps> = ({
         <Content>
           <Item>
             <Label> 任务:</Label>
-            <Input type="text" value={task.name} />
+            <Input
+              type="text"
+              value={taskName}
+              onChange={handleChangeTaskName}
+            />
           </Item>
           <Item>
             <Label> 描述:</Label>
-            <Input type="text" value="describe" />
+            <Input type="text" defaultValue="describe" />
           </Item>
         </Content>
       </RenderModal>
