@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
@@ -59,44 +59,46 @@ const Title = styled.div`
   text-align: start;
 `;
 
-type Props = {
+type ModalProps = {
   id: string;
   title: string;
   children: React.ReactNode;
-  closeModal: () => void;
+  close: () => void;
   commit: () => void;
 };
 
-const Modal = React.memo(
-  ({ id, title, children, closeModal, commit }: Props) => {
-    const domEl = document.getElementById(id);
+const Modal: FunctionComponent<ModalProps> = ({
+  id,
+  title,
+  children,
+  close,
+  commit,
+}: ModalProps) => {
+  const domEl = document.getElementById(id);
 
-    if (!domEl) return null;
-    return ReactDOM.createPortal(
-      <MaskModal>
-        <DialogModal>
-          <div>
-            <Title>{title}</Title>
-            <Btn className="close" onClick={closeModal}>
-              X
-            </Btn>
-          </div>
-          <div>{children}</div>
-          <div>
-            <Btn className="cancel" onClick={closeModal}>
-              Cancel
-            </Btn>
-            <Btn className="commit" onClick={commit}>
-              Commit
-            </Btn>
-          </div>
-        </DialogModal>
-      </MaskModal>,
-      domEl
-    );
-  }
-);
-
-Modal.displayName = "Modal";
+  if (!domEl) return null;
+  return ReactDOM.createPortal(
+    <MaskModal>
+      <DialogModal>
+        <div>
+          <Title>{title}</Title>
+          <Btn className="close" onClick={close}>
+            X
+          </Btn>
+        </div>
+        <div>{children}</div>
+        <div>
+          <Btn className="cancel" onClick={close}>
+            Cancel
+          </Btn>
+          <Btn className="commit" onClick={commit}>
+            Commit
+          </Btn>
+        </div>
+      </DialogModal>
+    </MaskModal>,
+    domEl
+  );
+};
 
 export default Modal;

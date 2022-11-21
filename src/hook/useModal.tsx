@@ -20,7 +20,7 @@ export const useModal = ({ id, title, preHandle }: ModalProps) => {
   const RenderModal = ({ children }: { children: React.ReactNode }) => (
     <>
       {isVisible && (
-        <Modal closeModal={hide} title={title} id={id} commit={commit}>
+        <Modal close={hide} title={title} id={id} commit={commit}>
           {children}
         </Modal>
       )}
