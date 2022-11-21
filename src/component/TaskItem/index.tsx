@@ -1,15 +1,11 @@
-import React, {
-  ChangeEvent,
-  FunctionComponent,
-  KeyboardEvent,
-  useState,
-} from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import DeleteImageURL from "../../assets/delete.png";
 import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
 import { TaskAction, updateTaskList } from "../../store/task/reducer";
 import { useAppDispatch } from "../../store";
+import { TaskEdition } from "../TaskEdition";
 
 const Item = styled.li`
   height: 4rem;
@@ -25,7 +21,7 @@ const Item = styled.li`
     background-color: #effaf6;
     text-decoration: line-through wavy #d8d7d7;
 
-    input[type="text"] {
+    > input[type="text"] {
       background-color: #effaf6;
     }
   }
@@ -36,17 +32,10 @@ const Item = styled.li`
   }
 `;
 
-const Info = styled.input`
+const Info = styled.div`
   padding-left: 1.5rem;
   text-align: left;
   flex: 1;
-  border: 0;
-  height: 2rem;
-
-  :focus {
-    outline: none;
-    border-bottom: 0.1rem solid gray;
-  }
 `;
 
 const Img = styled.img`
@@ -69,7 +58,6 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
   task,
 }: TaskProps) => {
   const dispatch = useAppDispatch();
-  const [taskName, setTaskName] = useState(task.name);
 
   const handleDeleteTask = () => {
     const taskAction: TaskAction = {
@@ -87,21 +75,6 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
     dispatch(updateTaskList(taskAction));
   };
 
-  const handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
-    setTaskName(event.target.value);
-  };
-
-  const handleUpdateTaskName = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.code === "Enter") {
-      const taskAction: TaskAction = {
-        actionType: ACTION_TYPE.UPDATE_TASK_NAME,
-        task: { ...task, name: taskName },
-      };
-      dispatch(updateTaskList(taskAction));
-      event.currentTarget.blur();
-    }
-  };
-
   return (
     <Item
       data-testid="task-item"
@@ -113,12 +86,8 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
         className="input-checkbox"
         onClick={handleSwitchTaskState}
       />
-      <Info
-        type="text"
-        value={taskName}
-        onKeyDown={handleUpdateTaskName}
-        onChange={handleChangeTaskName}
-      />
+      <Info>{task.name}</Info>
+      <TaskEdition task={task} />
       <Img src={DeleteImageURL} alt="Delete Task" onClick={handleDeleteTask} />
     </Item>
   );
