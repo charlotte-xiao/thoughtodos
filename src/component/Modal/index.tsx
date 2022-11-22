@@ -77,28 +77,30 @@ const Modal: FunctionComponent<ModalProps> = ({
   const domEl = document.getElementById(id);
 
   if (!domEl) return null;
-  return ReactDOM.createPortal(
-    <MaskModal>
-      <DialogModal>
-        <div>
-          <Title>{title}</Title>
-          <Btn className="close" onClick={close}>
-            X
-          </Btn>
-        </div>
-        <div>{children}</div>
-        <div>
-          <Btn className="cancel" onClick={close}>
-            Cancel
-          </Btn>
-          <Btn className="commit" onClick={commit}>
-            Commit
-          </Btn>
-        </div>
-      </DialogModal>
-    </MaskModal>,
-    domEl
-  );
+  const modalContainer = () => {
+    return (
+      <MaskModal>
+        <DialogModal>
+          <div>
+            <Title>{title}</Title>
+            <Btn className="close" onClick={close}>
+              X
+            </Btn>
+          </div>
+          <div>{children}</div>
+          <div>
+            <Btn className="cancel" onClick={close}>
+              Cancel
+            </Btn>
+            <Btn className="commit" onClick={commit}>
+              Commit
+            </Btn>
+          </div>
+        </DialogModal>
+      </MaskModal>
+    );
+  };
+  return ReactDOM.createPortal(modalContainer(), domEl);
 };
 
 export default Modal;
