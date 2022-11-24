@@ -1,24 +1,27 @@
-import {render, screen} from '@testing-library/react';
-import React from 'react';
-import AddTaskComponent from "./index";
-import {Provider} from "react-redux";
-import {store} from "../../store/Store";
+import { render, screen } from "@testing-library/react";
+import React from "react";
+import { Provider } from "react-redux";
+import { AddTaskComponent } from "./index";
+import store from "../../store";
 
-describe('AddTask Test', () => {
-    test('should render input', () => {
+describe("AddTask Test", () => {
+  test("should render input", () => {
+    render(
+      <Provider store={store}>
+        <AddTaskComponent />
+      </Provider>
+    );
 
-        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
+    expect(screen.getByRole("textbox")).toBeInTheDocument();
+  });
 
-        expect(screen.getByRole('textbox')).toBeInTheDocument();
+  test("should calculate current task amounts", () => {
+    render(
+      <Provider store={store}>
+        <AddTaskComponent />
+      </Provider>
+    );
 
-    });
-
-    test('should calculate current task amounts', () => {
-
-        render(<Provider store={store}><AddTaskComponent changeTaskFilterCondition={jest.fn()}/></Provider>);
-
-        expect(screen.getByText('4 tasks')).toBeInTheDocument();
-
-    });
+    expect(screen.getByText("4 tasks")).toBeInTheDocument();
+  });
 });
-

@@ -1,27 +1,36 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React, {
+  ChangeEvent,
+  FunctionComponent,
+  KeyboardEvent,
+  useState,
+} from "react";
 import Task from "../../models/Task";
 import styled from "styled-components";
-import {ACTION_TYPE} from "../../constants/ActionType";
-import {connect} from "react-redux";
-import {TaskAction, TaskDispatch} from "../../store/Store";
-import {Action} from "@reduxjs/toolkit";
-import TaskList from "../../models/TaskList";
-import {TaskFilterCondition} from "../../constants/TaskFilterCondition";
-import {formatDate} from "../../utils/time";
+import { ACTION_TYPE } from "../../constants/ActionType";
+import { FILTER_CONDITION } from "../../constants/FilterCondition";
+import { formatDate } from "../../utils/time";
+import { useAppDispatch, useAppSelector } from "../../store";
+import {
+  FilterConditionAction,
+  TaskAction,
+  updateFilterCondition,
+  updateTaskList,
+} from "../../store/task/reducer";
+import { getAmount, getFilterCondition } from "../../store/task/selectors";
 
 const Container = styled.div`
   height: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-`
+`;
 
 const NowDate = styled.div`
   font-weight: bolder;
   font-size: 2rem;
   color: #495862;
   text-align: left;
-`
+`;
 
 const ShowBox = styled.div`
   display: flex;
@@ -35,7 +44,7 @@ const ShowBox = styled.div`
     flex: 1;
     text-align: left;
   }
-`
+`;
 
 const Button = styled.input`
   color: #7f95a3;
@@ -71,88 +80,66 @@ const Input = styled.input`
   }
 `;
 
-type AddTaskProps = {
-    amount: number
-    handleAddTask(taskName: string): void;
-    changeTaskFilterCondition(taskFilterCondition: number): void;
-}
+export const AddTaskComponent: FunctionComponent = () => {
+  const [taskName, setTaskName] = useState("");
+  const dispatch = useAppDispatch();
+  const amount = useAppSelector(getAmount);
+  const filterCondition = useAppSelector(getFilterCondition);
 
-type AddTaskState = {
-    taskName: string,
-    taskFilterCondition: number
-}
+  const dispatchAddTask = (taskName: string) => {
+    const taskAction: TaskAction = {
+      actionType: ACTION_TYPE.ADD_TASK,
+      task: { name: taskName } as Task,
+    };
+    dispatch(updateTaskList(taskAction));
+  };
 
-class AddTaskComponent extends React.Component<AddTaskProps, AddTaskState> {
-
-    constructor(props: AddTaskProps) {
-        super(props);
-        this.state = {
-            taskName: '',
-            taskFilterCondition: TaskFilterCondition.ALL
-        }
+  const handleAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter") {
+      dispatchAddTask(taskName);
+      setTaskName("");
     }
+  };
 
-    handleAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.code === 'Enter') {
-            this.props.handleAddTask(this.state.taskName);
-            this.setState({
-                ...this.state,
-                taskName: ''
-            })
-        }
-    }
+  const handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskName(event.target.value);
+  };
 
-    handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({taskName: event.target.value})
-    }
-    handleChangeTaskFilterCondition = (condition: number) => {
-        this.setState({...this.state, taskFilterCondition: condition});
-        this.props.changeTaskFilterCondition(condition);
-    }
+  const handleChangeTaskFilterCondition = (condition: number) => {
+    const filterConditionAction: FilterConditionAction = {
+      filterCondition: condition,
+    };
+    dispatch(updateFilterCondition(filterConditionAction));
+  };
 
-    render() {
-        return (
-            <Container>
-                <NowDate>{formatDate(new Date(), '{dayOfWeek} {month} {day} {year}')}</NowDate>
-                <ShowBox>
-                    <div>{this.props.amount} tasks</div>
-                    {
-                        Object.entries(TaskFilterCondition).map((condition) => (
-                            <Button type="button" value={condition[0]} key={condition[1]}
-                                    className={condition[1] === this.state.taskFilterCondition ? 'is_active' : ''}
-                                    onClick={() => {
-                                        this.handleChangeTaskFilterCondition(condition[1])
-                                    }}/>
-                        ))
-                    }
-                </ShowBox>
-                <Input type="text" value={this.state.taskName}
-                       onKeyDown={this.handleAddTask}
-                       onChange={this.handleChangeTaskName}
-                       placeholder="Add a new task...(type enter to submit)"/>
-            </Container>);
-    }
-
-}
-
-const mapStateToProps = (state: TaskList) => {
-    return {
-        amount: state.taskList.length,
-    }
-}
-
-const mapDispatchToProps = (dispatch: TaskDispatch) => {
-    return {
-        handleAddTask: (taskName: string) => {
-            const taskAction: Action<TaskAction> = {
-                type: {
-                    actionType: ACTION_TYPE.ADD_TASK,
-                    task: {name: taskName,} as Task
-                }
-            }
-            dispatch(taskAction);
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTaskComponent);
+  return (
+    <Container>
+      <NowDate>
+        {formatDate(new Date(), "{dayOfWeek} {month} {day} {year}")}
+      </NowDate>
+      <ShowBox>
+        <div>
+          {amount} {amount <= 1 ? "task" : "tasks"}
+        </div>
+        {Object.entries(FILTER_CONDITION).map((condition) => (
+          <Button
+            type="button"
+            value={condition[0]}
+            key={condition[1]}
+            className={condition[1] === filterCondition ? "is_active" : ""}
+            onClick={() => {
+              handleChangeTaskFilterCondition(condition[1]);
+            }}
+          />
+        ))}
+      </ShowBox>
+      <Input
+        type="text"
+        value={taskName}
+        onKeyDown={handleAddTask}
+        onChange={handleChangeTaskName}
+        placeholder="Add a new task...(type enter to submit)"
+      />
+    </Container>
+  );
+};

@@ -20,5 +20,6 @@
       "name": "completedTask2",
       "isCompleted": true
     }
-  ]
+  ],
+  "filterCondition": 0
 }
