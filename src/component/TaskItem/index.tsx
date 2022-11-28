@@ -5,6 +5,7 @@ import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
 import { TaskAction, updateTaskList } from "../../store/task/reducer";
 import { useAppDispatch } from "../../store";
+import { TaskEdition } from "../TaskEdition";
 
 const Item = styled.li`
   height: 4rem;
@@ -19,6 +20,10 @@ const Item = styled.li`
   &.is_completed {
     background-color: #effaf6;
     text-decoration: line-through wavy #d8d7d7;
+
+    > input[type="text"] {
+      background-color: #effaf6;
+    }
   }
 
   input[type="checkbox"] {
@@ -82,6 +87,7 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
         onClick={handleSwitchTaskState}
       />
       <Info>{task.name}</Info>
+      <TaskEdition task={task} />
       <Img src={DeleteImageURL} alt="Delete Task" onClick={handleDeleteTask} />
     </Item>
   );

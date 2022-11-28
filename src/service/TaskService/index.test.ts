@@ -52,4 +52,22 @@ describe("Task Service", () => {
 
     expect(updatedTaskList.taskList).toHaveLength(0);
   });
+
+  test("should update Task Name", () => {
+    const taskService = new TaskService();
+    const completedTask = { id: 1, name: "task", isCompleted: true };
+    const preTaskList = {
+      taskList: [completedTask],
+      filterCondition: FILTER_CONDITION.ALL,
+    };
+
+    const updatedTaskList = taskService.executeStrategy(
+      ACTION_TYPE.UPDATE_TASK_NAME,
+      preTaskList,
+      { ...completedTask, name: "new Name" }
+    );
+
+    expect(updatedTaskList.taskList).toHaveLength(1);
+    expect(updatedTaskList.taskList[0].name).toBe("new Name");
+  });
 });

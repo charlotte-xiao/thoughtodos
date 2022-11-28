@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import TaskListComponent from "../../component/TaskList";
-import { AddTaskComponent } from "../../component/AddTask";
+import { Navigation } from "../../component/Navigation";
 import { useAppSelector } from "../../store";
 import { getTaskList } from "../../store/task/selectors";
 
@@ -19,7 +19,7 @@ export const TaskPage: FunctionComponent = () => {
 
   return (
     <Content>
-      <AddTaskComponent />
+      <Navigation />
       <TaskListComponent taskList={taskList} />
     </Content>
   );
