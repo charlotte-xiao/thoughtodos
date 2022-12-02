@@ -54,7 +54,10 @@ const deleteTodo = createAsyncThunk(
   TODO_API_PREFIX.DELETE_TODO,
   async (task: Task) => {
     const { data } = await axios.delete(`${BASE_URL}/todo/${task.id}`);
-    return { id: data._id } as Task;
+    return {
+      action: ACTION_TYPE.DELETE_TASK,
+      data: { id: data._id } as Task,
+    };
   }
 );
 

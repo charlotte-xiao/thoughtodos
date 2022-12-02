@@ -6,6 +6,7 @@ import Task from "../../models/Task";
 import { TaskAction, updateTaskList } from "../../store/task/reducer";
 import { useAppDispatch } from "../../store";
 import { TaskEdition } from "../TaskEdition";
+import { deleteTodo } from "../../api/todo";
 
 const Item = styled.li`
   height: 4rem;
@@ -60,11 +61,7 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
   const dispatch = useAppDispatch();
 
   const handleDeleteTask = () => {
-    const taskAction: TaskAction = {
-      actionType: ACTION_TYPE.DELETE_TASK,
-      task: { id: task.id } as Task,
-    };
-    dispatch(updateTaskList(taskAction));
+    dispatch(deleteTodo({ id: task.id } as Task));
   };
 
   const handleSwitchTaskState = () => {
