@@ -1,12 +1,10 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import DeleteImageURL from "../../assets/delete.png";
-import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
-import { TaskAction, updateTaskList } from "../../store/task/reducer";
 import { useAppDispatch } from "../../store";
 import { TaskEdition } from "../TaskEdition";
-import { deleteTodo } from "../../api/todo";
+import { deleteTodo, updateTodoStatus } from "../../api/todo";
 
 const Item = styled.li`
   height: 4rem;
@@ -65,11 +63,7 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
   };
 
   const handleSwitchTaskState = () => {
-    const taskAction: TaskAction = {
-      actionType: ACTION_TYPE.SWITCH_TASK_STATE,
-      task: task,
-    };
-    dispatch(updateTaskList(taskAction));
+    dispatch(updateTodoStatus(task));
   };
 
   return (

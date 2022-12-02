@@ -8,7 +8,13 @@ import TaskService from "../../service/TaskService";
 import Task from "../../models/Task";
 import TaskStore from "../../models/TaskStore";
 import { ACTION_TYPE } from "../../constants/ActionType";
-import { createTodo, deleteTodo, getAllTodos } from "../../api/todo";
+import {
+  createTodo,
+  deleteTodo,
+  getAllTodos,
+  updateTodoName,
+  updateTodoStatus,
+} from "../../api/todo";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -26,16 +32,6 @@ const taskListSlice = createSlice({
   name: "taskList",
   initialState,
   reducers: {
-    updateTaskList: (
-      state: TaskStore,
-      actionParams: PayloadAction<TaskAction>
-    ) => {
-      // return taskService.executeStrategy(
-      //   actionParams.payload.actionType,
-      //   state,
-      //   actionParams.payload.task
-      // );
-    },
     updateFilterCondition: (
       state: TaskStore,
       actionParams: PayloadAction<FilterConditionAction>
@@ -63,9 +59,19 @@ const taskListSlice = createSlice({
         task: action.payload.data,
       });
     });
+    builder.addCase(updateTodoName.fulfilled, (state: TaskStore, action) => {
+      return taskService.executeStrategy(action.payload.action, state, {
+        task: action.payload.data,
+      });
+    });
+    builder.addCase(updateTodoStatus.fulfilled, (state: TaskStore, action) => {
+      return taskService.executeStrategy(action.payload.action, state, {
+        task: action.payload.data,
+      });
+    });
   },
 });
 
-export const { updateTaskList, updateFilterCondition } = taskListSlice.actions;
+export const { updateFilterCondition } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

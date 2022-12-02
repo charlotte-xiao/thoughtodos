@@ -54,16 +54,9 @@ export default class TaskService {
     preTaskStore: TaskStore,
     input: InputContext
   ): TaskStore => {
-    const preTaskState = input.task.isCompleted;
-    const updateTask = { ...input.task, isCompleted: !preTaskState };
-    const updatedTaskList = preTaskStore.taskList.filter(
-      (task: Task) => task.id !== input.task.id
-    );
-    if (preTaskState) {
-      updatedTaskList.unshift(updateTask);
-    } else {
-      updatedTaskList.push(updateTask);
-    }
+    const updatedTaskList = preTaskStore.taskList.map((task) => {
+      return task.id === input.task.id ? input.task : task;
+    });
     return { ...preTaskStore, taskList: updatedTaskList };
   };
 

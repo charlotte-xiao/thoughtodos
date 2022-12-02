@@ -8,7 +8,8 @@ const TODO_API_PREFIX = {
   GET_ALL_TODO: "getAllTodo",
   CREATE_TODO: "createTodo",
   DELETE_TODO: "deleteTodo",
-  UPDATE_TODO: "updateTodo",
+  UPDATE_TODO_NAME: "updateTodoName",
+  UPDATE_TODO_STATUS: "updateTodoStatus",
 };
 
 const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
@@ -60,21 +61,44 @@ const deleteTodo = createAsyncThunk(
     };
   }
 );
-
-const updateTodo = createAsyncThunk(
-  TODO_API_PREFIX.UPDATE_TODO,
+const updateTodoName = createAsyncThunk(
+  TODO_API_PREFIX.UPDATE_TODO_NAME,
   async (task: Task) => {
-    const { data } = await axios.put(`${BASE_URL}/todo/${task.id}`, {
-      title: task.name,
-      description: "description",
-      status: "ACTIVE",
-    });
+    const data = await updateTodo(task);
     return {
-      id: data._id,
-      name: data.title,
-      isCompleted: false,
+      action: ACTION_TYPE.UPDATE_TASK_NAME,
+      data: data as Task,
+    };
+  }
+);
+const updateTodoStatus = createAsyncThunk(
+  TODO_API_PREFIX.UPDATE_TODO_STATUS,
+  async (task: Task) => {
+    const data = await updateTodo({ ...task, isCompleted: !task.isCompleted });
+    return {
+      action: ACTION_TYPE.SWITCH_TASK_STATE,
+      data: data as Task,
     };
   }
 );
 
-export { getAllTodos, createTodo, deleteTodo, updateTodo };
+const updateTodo = async (task: Task) => {
+  const { data } = await axios.put(`${BASE_URL}/todo/${task.id}`, {
+    title: task.name,
+    description: "description",
+    status: task.isCompleted ? "COMPLETED" : "Active",
+  });
+  return {
+    id: data._id,
+    name: data.title,
+    isCompleted: data.status === "COMPLETED",
+  };
+};
+
+export {
+  getAllTodos,
+  createTodo,
+  deleteTodo,
+  updateTodoName,
+  updateTodoStatus,
+};
