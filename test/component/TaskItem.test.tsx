@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import React from "react";
-import Task from "../../models/Task";
-import TaskItemComponent from "./index";
-import store from "../../store";
+import Task from "../../src/models/Task";
+import TaskItemComponent from "../../src/component/TaskItem";
+import store from "../../src/store";
 
 describe("TaskItem Test", () => {
   test("should render Todo Task", () => {

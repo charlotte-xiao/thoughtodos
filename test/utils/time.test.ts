@@ -1,4 +1,4 @@
-import { formatDate } from "./index";
+import { formatDate } from "../../src/utils/time";
 
 describe("time utils", () => {
   test("should format time when given correct time and format string", () => {

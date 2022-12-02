@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { TaskPage } from "./index";
+import { TaskPage } from "../../src/pages/TaskPage";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
-import store from "../../store";
+import store from "../../src/store";
 
 jest.mock("../../default/defaultTaskList.json", () => {
   return { taskList: [{ id: 1, name: "123" }] };
