@@ -8,7 +8,7 @@ import TaskService from "../../service/TaskService";
 import Task from "../../models/Task";
 import TaskStore from "../../models/TaskStore";
 import { ACTION_TYPE } from "../../constants/ActionType";
-import { getAllTodos } from "../../api/todo";
+import { createTodo, getAllTodos } from "../../api/todo";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -51,6 +51,11 @@ const taskListSlice = createSlice({
       taskService.executeStrategy(action.payload.action, state, {
         task: {} as Task,
         taskList: action.payload.data,
+      });
+    });
+    builder.addCase(createTodo.fulfilled, (state: TaskStore, action) => {
+      taskService.executeStrategy(action.payload.action, state, {
+        task: action.payload.data,
       });
     });
   },

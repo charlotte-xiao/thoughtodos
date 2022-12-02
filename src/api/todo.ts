@@ -13,13 +13,15 @@ const TODO_API_PREFIX = {
 
 const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
   const { data } = await axios.get(`${BASE_URL}/todo`);
-  const formatData = data.map((item: { _id: string; title: string }) => {
-    return {
-      id: item._id,
-      name: item.title,
-      isCompleted: true,
-    };
-  });
+  const formatData = data.map(
+    (item: { _id: string; title: string; status: string }) => {
+      return {
+        id: item._id,
+        name: item.title,
+        isCompleted: item.status === "COMPLETED",
+      };
+    }
+  );
   return {
     action: ACTION_TYPE.DEFAULT,
     data: formatData,
@@ -29,18 +31,21 @@ const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
 const createTodo = createAsyncThunk(
   TODO_API_PREFIX.CREATE_TODO,
   async (task: Task) => {
-    //todo: a part of fields isn't used
     const { data } = await axios.post(`${BASE_URL}/todo`, {
       title: task.name,
       description: "description",
       status: "Active",
       startDate: "2020-01-01",
-      dueDate: "2022-01-01",
+      dueDate: "2023-01-01",
     });
-    return {
+    const formatData = {
       id: data._id,
       name: data.title,
       isCompleted: false,
+    };
+    return {
+      action: ACTION_TYPE.ADD_TASK,
+      data: formatData,
     };
   }
 );
