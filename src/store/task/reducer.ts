@@ -1,9 +1,14 @@
 import defaultTaskList from "../../default/defaultTaskList.json";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import TaskService from "../../service/TaskService";
 import Task from "../../models/Task";
 import TaskStore from "../../models/TaskStore";
 import { ACTION_TYPE } from "../../constants/ActionType";
+import { getAllTodos } from "../../api/todo";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -25,11 +30,11 @@ const taskListSlice = createSlice({
       state: TaskStore,
       actionParams: PayloadAction<TaskAction>
     ) => {
-      return taskService.executeStrategy(
-        actionParams.payload.actionType,
-        state,
-        actionParams.payload.task
-      );
+      // return taskService.executeStrategy(
+      //   actionParams.payload.actionType,
+      //   state,
+      //   actionParams.payload.task
+      // );
     },
     updateFilterCondition: (
       state: TaskStore,
@@ -40,6 +45,14 @@ const taskListSlice = createSlice({
         filterCondition: actionParams.payload.filterCondition,
       };
     },
+  },
+  extraReducers: (builder: ActionReducerMapBuilder<TaskStore>) => {
+    builder.addCase(getAllTodos.fulfilled, (state: TaskStore, action) => {
+      taskService.executeStrategy(action.payload.action, state, {
+        task: {} as Task,
+        taskList: action.payload.data,
+      });
+    });
   },
 });
 

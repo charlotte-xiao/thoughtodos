@@ -12,7 +12,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.ADD_TASK,
       preTaskList,
-      newTask
+      { task: newTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
@@ -30,7 +30,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.SWITCH_TASK_STATE,
       preTaskList,
-      todoTask
+      { task: todoTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
@@ -47,7 +47,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.DELETE_TASK,
       preTaskList,
-      completedTask
+      { task: completedTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(0);
@@ -64,7 +64,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.UPDATE_TASK_NAME,
       preTaskList,
-      { ...completedTask, name: "new Name" }
+      { task: { ...completedTask, name: "new Name" } }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);

@@ -1,7 +1,11 @@
 import { ACTION_TYPE } from "../../constants/ActionType";
 import TaskStore from "../../models/TaskStore";
 import Task from "../../models/Task";
-import defaultTaskList from "../../default/defaultTaskList.json";
+
+type InputContext = {
+  task: Task;
+  taskList?: Task[];
+};
 
 export default class TaskService {
   private readonly taskStrategyMap;
@@ -16,36 +20,44 @@ export default class TaskService {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private getTaskList = (preTaskStore: TaskStore, input: Task): TaskStore => {
-    return defaultTaskList;
+  private getTaskList = (
+    preTaskStore: TaskStore,
+    input: InputContext
+  ): TaskStore => {
+    preTaskStore.taskList = input.taskList ?? [];
+    return preTaskStore;
   };
 
-  private addNewTask = (preTaskStore: TaskStore, input: Task): TaskStore => {
-    // Todo: Generate Unique ID in Back-End
+  private addNewTask = (
+    preTaskStore: TaskStore,
+    input: InputContext
+  ): TaskStore => {
     preTaskStore.taskList.unshift({
-      ...input,
+      ...input.task,
       id: new Date().getTime(),
       isCompleted: false,
     });
     return preTaskStore;
   };
 
-  private deleteTask = (preTaskStore: TaskStore, input: Task): TaskStore => {
+  private deleteTask = (
+    preTaskStore: TaskStore,
+    input: InputContext
+  ): TaskStore => {
     const updatedTodoList = preTaskStore.taskList.filter(
-      (task: Task) => task.id !== input.id
+      (task: Task) => task.id !== input.task.id
     );
     return { ...preTaskStore, taskList: updatedTodoList };
   };
 
   private switchTaskState = (
     preTaskStore: TaskStore,
-    input: Task
+    input: InputContext
   ): TaskStore => {
-    const preTaskState = input.isCompleted;
-    const updateTask = { ...input, isCompleted: !preTaskState };
+    const preTaskState = input.task.isCompleted;
+    const updateTask = { ...input.task, isCompleted: !preTaskState };
     const updatedTaskList = preTaskStore.taskList.filter(
-      (task: Task) => task.id !== input.id
+      (task: Task) => task.id !== input.task.id
     );
     if (preTaskState) {
       updatedTaskList.unshift(updateTask);
@@ -57,10 +69,10 @@ export default class TaskService {
 
   private updateTaskName = (
     preTaskStore: TaskStore,
-    input: Task
+    input: InputContext
   ): TaskStore => {
     const updatedTaskList = preTaskStore.taskList.map((task: Task) =>
-      task.id === input.id ? { ...task, name: input.name } : task
+      task.id === input.task.id ? { ...task, name: input.task.name } : task
     );
     return { ...preTaskStore, taskList: updatedTaskList };
   };
@@ -68,7 +80,7 @@ export default class TaskService {
   executeStrategy = (
     actionType: ACTION_TYPE,
     preTaskStore: TaskStore,
-    input: Task
+    input: InputContext
   ): TaskStore => {
     actionType = actionType ?? ACTION_TYPE.DEFAULT;
     return this.taskStrategyMap[actionType](preTaskStore, input);
