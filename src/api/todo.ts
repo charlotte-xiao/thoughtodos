@@ -61,6 +61,7 @@ const deleteTodo = createAsyncThunk(
     };
   }
 );
+
 const updateTodoName = createAsyncThunk(
   TODO_API_PREFIX.UPDATE_TODO_NAME,
   async (task: Task) => {
@@ -71,6 +72,7 @@ const updateTodoName = createAsyncThunk(
     };
   }
 );
+
 const updateTodoStatus = createAsyncThunk(
   TODO_API_PREFIX.UPDATE_TODO_STATUS,
   async (task: Task) => {

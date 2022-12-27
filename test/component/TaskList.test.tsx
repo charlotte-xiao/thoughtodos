@@ -5,7 +5,7 @@ import Task from "../../src/models/Task";
 import { Provider } from "react-redux";
 import store from "../../src/store";
 
-describe("TaskList Test", () => {
+describe("TaskList Component", () => {
   test("should render TaskList", () => {
     const mockTaskList: Task[] = [
       { id: 1, name: "task1", isCompleted: false },
@@ -14,7 +14,7 @@ describe("TaskList Test", () => {
 
     render(
       <Provider store={store}>
-        <TaskListComponent taskList={mockTaskList}></TaskListComponent>
+        <TaskListComponent taskList={mockTaskList} />
       </Provider>
     );
 

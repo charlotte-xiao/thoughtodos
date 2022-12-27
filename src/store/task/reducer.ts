@@ -1,4 +1,3 @@
-import defaultTaskList from "../../default/defaultTaskList.json";
 import {
   ActionReducerMapBuilder,
   createSlice,
@@ -15,6 +14,7 @@ import {
   updateTodoName,
   updateTodoStatus,
 } from "../../api/todo";
+import { FILTER_CONDITION } from "../../constants/FilterCondition";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -25,7 +25,10 @@ export type FilterConditionAction = {
   filterCondition: number;
 };
 
-const initialState = defaultTaskList as TaskStore;
+const initialState = {
+  taskList: [],
+  filterCondition: FILTER_CONDITION.ALL,
+} as TaskStore;
 const taskService = new TaskService();
 
 const taskListSlice = createSlice({

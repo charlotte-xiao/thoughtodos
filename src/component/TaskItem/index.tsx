@@ -73,13 +73,19 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
     >
       <input
         type="checkbox"
+        data-testid="task-item-update"
         defaultChecked={task.isCompleted}
         className="input-checkbox"
         onClick={handleSwitchTaskState}
       />
       <Info>{task.name}</Info>
       <TaskEdition task={task} />
-      <Img src={DeleteImageURL} alt="Delete Task" onClick={handleDeleteTask} />
+      <Img
+        data-testid="task-item-delete"
+        src={DeleteImageURL}
+        alt="Delete Task"
+        onClick={handleDeleteTask}
+      />
     </Item>
   );
 };

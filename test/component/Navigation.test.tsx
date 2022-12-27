@@ -3,9 +3,14 @@ import React from "react";
 import { Provider } from "react-redux";
 import { Navigation } from "../../src/component/Navigation";
 import store from "../../src/store";
+import * as utils from "../../src/utils/time";
 
-describe("AddTask Test", () => {
-  test("should render input", () => {
+describe("Navigation Component", () => {
+  beforeEach(() => {
+    jest.spyOn(utils, "formatDate").mockReturnValue("Monday December 22 2022");
+  });
+
+  test("should render input, zero amount and data information", () => {
     render(
       <Provider store={store}>
         <Navigation />
@@ -13,15 +18,7 @@ describe("AddTask Test", () => {
     );
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
-  });
-
-  test("should calculate current task amounts", () => {
-    render(
-      <Provider store={store}>
-        <Navigation />
-      </Provider>
-    );
-
-    expect(screen.getByText("4 tasks")).toBeInTheDocument();
+    expect(screen.getByText(`0 task`)).toBeInTheDocument();
+    expect(screen.getByText("Monday December 22 2022")).toBeInTheDocument();
   });
 });
