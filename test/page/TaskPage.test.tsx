@@ -24,6 +24,7 @@ describe("Task Page", () => {
     await waitFor(() => {
       const taskItems = screen.getAllByTestId("task-item");
       expect(taskItems).toHaveLength(TaskList.length);
+      expect(screen.getByText(`${TaskList.length} tasks`)).toBeInTheDocument();
     });
   });
 
@@ -49,6 +50,9 @@ describe("Task Page", () => {
       const taskItems = screen.getAllByTestId("task-item");
       expect(taskItems).toHaveLength(TaskList.length + 1);
       expect(screen.getByText(mockNewTaskName)).toBeInTheDocument();
+      expect(
+        screen.getByText(`${TaskList.length + 1} tasks`)
+      ).toBeInTheDocument();
     });
   });
 
@@ -68,6 +72,9 @@ describe("Task Page", () => {
     await waitFor(() => {
       const taskItems = screen.getAllByTestId("task-item");
       expect(taskItems).toHaveLength(TaskList.length - 1);
+      expect(
+        screen.getByText(`${TaskList.length - 1} tasks`)
+      ).toBeInTheDocument();
       expect(screen.queryByText(TaskList[0].title)).not.toBeInTheDocument();
     });
   });
