@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
+    "axios": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
@@ -21,18 +22,6 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
     ]
   },
   "devDependencies": {
@@ -55,6 +44,7 @@
     "eslint-plugin-testing-library": "^5.3.1",
     "jest": "^27.5.1",
     "jest-transform-stub": "^2.0.0",
+    "msw": "^0.39.2",
     "prettier": "^2.6.2",
     "react-scripts": "5.0.1",
     "ts-jest": "^27.1.4",

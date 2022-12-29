@@ -1,5 +1,5 @@
-import { getTaskList } from "./selectors";
-import { FILTER_CONDITION } from "../../constants/FilterCondition";
+import { getTaskList } from "../../src/store/task/selectors";
+import { FILTER_CONDITION } from "../../src/constants/FilterCondition";
 
 const mockTaskList = [
   {

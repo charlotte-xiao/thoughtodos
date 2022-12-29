@@ -1,7 +1,7 @@
-import TaskService from "./index";
-import { ACTION_TYPE } from "../../constants/ActionType";
-import Task from "../../models/Task";
-import { FILTER_CONDITION } from "../../constants/FilterCondition";
+import TaskService from "../../src/service/TaskService";
+import { ACTION_TYPE } from "../../src/constants/ActionType";
+import Task from "../../src/models/Task";
+import { FILTER_CONDITION } from "../../src/constants/FilterCondition";
 
 describe("Task Service", () => {
   test("should add new Task", () => {
@@ -12,7 +12,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.ADD_TASK,
       preTaskList,
-      newTask
+      { task: newTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
@@ -30,13 +30,13 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.SWITCH_TASK_STATE,
       preTaskList,
-      todoTask
+      { task: todoTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);
     expect(updatedTaskList.taskList[0].id).toBe(todoTask.id);
     expect(updatedTaskList.taskList[0].name).toBe(todoTask.name);
-    expect(updatedTaskList.taskList[0].isCompleted).toBe(!todoTask.isCompleted);
+    expect(updatedTaskList.taskList[0].isCompleted).toBe(todoTask.isCompleted);
   });
 
   test("should delete Task", () => {
@@ -47,7 +47,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.DELETE_TASK,
       preTaskList,
-      completedTask
+      { task: completedTask }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(0);
@@ -64,7 +64,7 @@ describe("Task Service", () => {
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.UPDATE_TASK_NAME,
       preTaskList,
-      { ...completedTask, name: "new Name" }
+      { task: { ...completedTask, name: "new Name" } }
     );
 
     expect(updatedTaskList.taskList).toHaveLength(1);

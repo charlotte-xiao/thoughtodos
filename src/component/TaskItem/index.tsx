@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import DeleteImageURL from "../../assets/delete.png";
-import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
-import { TaskAction, updateTaskList } from "../../store/task/reducer";
 import { useAppDispatch } from "../../store";
 import { TaskEdition } from "../TaskEdition";
+import { deleteTodo, updateTodoStatus } from "../../api/todo";
 
 const Item = styled.li`
   height: 4rem;
@@ -60,19 +59,11 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
   const dispatch = useAppDispatch();
 
   const handleDeleteTask = () => {
-    const taskAction: TaskAction = {
-      actionType: ACTION_TYPE.DELETE_TASK,
-      task: { id: task.id } as Task,
-    };
-    dispatch(updateTaskList(taskAction));
+    dispatch(deleteTodo({ id: task.id } as Task));
   };
 
   const handleSwitchTaskState = () => {
-    const taskAction: TaskAction = {
-      actionType: ACTION_TYPE.SWITCH_TASK_STATE,
-      task: task,
-    };
-    dispatch(updateTaskList(taskAction));
+    dispatch(updateTodoStatus(task));
   };
 
   return (
@@ -82,13 +73,19 @@ const TaskItemComponent: FunctionComponent<TaskProps> = ({
     >
       <input
         type="checkbox"
+        data-testid="task-item-update"
         defaultChecked={task.isCompleted}
         className="input-checkbox"
         onClick={handleSwitchTaskState}
       />
       <Info>{task.name}</Info>
       <TaskEdition task={task} />
-      <Img src={DeleteImageURL} alt="Delete Task" onClick={handleDeleteTask} />
+      <Img
+        data-testid="task-item-delete"
+        src={DeleteImageURL}
+        alt="Delete Task"
+        onClick={handleDeleteTask}
+      />
     </Item>
   );
 };

@@ -21,7 +21,7 @@ export default class TaskListComponent extends React.Component<
     return (
       <Section>
         {this.props.taskList.map((task: Task) => (
-          <TaskItemComponent key={task.id} task={task}></TaskItemComponent>
+          <TaskItemComponent key={task.id} task={task} />
         ))}
       </Section>
     );

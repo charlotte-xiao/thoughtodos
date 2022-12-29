@@ -18,7 +18,9 @@ module.exports = {
   transform: {
     ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
       "jest-transform-stub",
+    "node_modules/axios/.+\\.(j|t)sx?$": "ts-jest",
   },
+  transformIgnorePatterns: ["/node_modules/(?!(axios)/)"],
   testEnvironment: "jsdom",
 
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],

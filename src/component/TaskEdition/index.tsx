@@ -3,9 +3,8 @@ import { useModal } from "../../hook/useModal";
 import styled from "styled-components";
 import EditImageURL from "../../assets/edit.png";
 import Task from "../../models/Task";
-import { TaskAction, updateTaskList } from "../../store/task/reducer";
-import { ACTION_TYPE } from "../../constants/ActionType";
 import { useAppDispatch } from "../../store";
+import { updateTodoName } from "../../api/todo";
 
 const Content = styled.div`
   display: flex;
@@ -65,11 +64,7 @@ export const TaskEdition: FunctionComponent<TaskEditionProps> = ({
     title: "Update Task",
     id: `modal-edition-${task.id}`,
     preHandle: () => {
-      const taskAction: TaskAction = {
-        actionType: ACTION_TYPE.UPDATE_TASK_NAME,
-        task: { ...task, name: taskName },
-      };
-      dispatch(updateTaskList(taskAction));
+      dispatch(updateTodoName({ ...task, name: taskName }));
     },
   };
   const { show, RenderModal } = useModal(modalProps);

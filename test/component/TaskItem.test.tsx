@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import React from "react";
-import Task from "../../models/Task";
-import TaskItemComponent from "./index";
-import store from "../../store";
+import Task from "../../src/models/Task";
+import TaskItemComponent from "../../src/component/TaskItem";
+import store from "../../src/store";
 
-describe("TaskItem Test", () => {
+describe("TaskItem Component", () => {
   test("should render Todo Task", () => {
     const mockTask: Task = { name: "todo Task", isCompleted: false } as Task;
 
     render(
       <Provider store={store}>
-        <TaskItemComponent task={mockTask}></TaskItemComponent>
+        <TaskItemComponent task={mockTask} />
       </Provider>
     );
 
@@ -22,14 +22,11 @@ describe("TaskItem Test", () => {
   });
 
   test("should render Completed Task", () => {
-    const mockTask: Task = {
-      name: "completed Task",
-      isCompleted: true,
-    } as Task;
+    const mockTask: Task = { name: "done Task", isCompleted: true } as Task;
 
     render(
       <Provider store={store}>
-        <TaskItemComponent task={mockTask}></TaskItemComponent>
+        <TaskItemComponent task={mockTask} />
       </Provider>
     );
 

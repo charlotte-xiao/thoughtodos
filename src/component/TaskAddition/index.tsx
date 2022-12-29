@@ -6,9 +6,8 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../store";
-import { TaskAction, updateTaskList } from "../../store/task/reducer";
-import { ACTION_TYPE } from "../../constants/ActionType";
 import Task from "../../models/Task";
+import { createTodo } from "../../api/todo";
 
 const Input = styled.input`
   font-size: larger;
@@ -30,17 +29,9 @@ export const TaskAddition: FunctionComponent = () => {
   const [taskName, setTaskName] = useState("");
   const dispatch = useAppDispatch();
 
-  const dispatchAddTask = (taskName: string) => {
-    const taskAction: TaskAction = {
-      actionType: ACTION_TYPE.ADD_TASK,
-      task: { name: taskName } as Task,
-    };
-    dispatch(updateTaskList(taskAction));
-  };
-
   const handleAddTask = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.code === "Enter") {
-      dispatchAddTask(taskName);
+      dispatch(createTodo({ name: taskName } as Task));
       setTaskName("");
     }
   };

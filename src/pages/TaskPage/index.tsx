@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import styled from "styled-components";
 import TaskListComponent from "../../component/TaskList";
 import { Navigation } from "../../component/Navigation";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { getTaskList } from "../../store/task/selectors";
+import { getAllTodos } from "../../api/todo";
+import Task from "../../models/Task";
 
 const Content = styled.div`
   background-color: white;
@@ -15,7 +17,13 @@ const Content = styled.div`
 `;
 
 export const TaskPage: FunctionComponent = () => {
-  const taskList = useAppSelector(getTaskList);
+  const dispatch = useAppDispatch();
+
+  const taskList: Task[] = useAppSelector(getTaskList);
+
+  useEffect(() => {
+    dispatch(getAllTodos());
+  }, []);
 
   return (
     <Content>
