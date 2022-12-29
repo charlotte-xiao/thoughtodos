@@ -33,3 +33,7 @@ export const getAmount = (state: RootState): number => {
 export const getFilterCondition = (state: RootState): number => {
   return state.taskReducer.filterCondition;
 };
+
+export const getIsLogin = (state: RootState): boolean => {
+  return state.taskReducer.isLogin;
+};

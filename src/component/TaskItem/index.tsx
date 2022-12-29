@@ -37,7 +37,7 @@ const Info = styled.div`
   flex: 1;
 `;
 
-const Img = styled.img`
+export const Img = styled.img`
   width: 2rem;
   height: 2rem;
   margin-left: 0.5rem;

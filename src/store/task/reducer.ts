@@ -15,6 +15,7 @@ import {
   updateTodoStatus,
 } from "../../api/todo";
 import { FILTER_CONDITION } from "../../constants/FilterCondition";
+import { loginGithub } from "../../api/user";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -28,6 +29,7 @@ export type FilterConditionAction = {
 const initialState = {
   taskList: [],
   filterCondition: FILTER_CONDITION.ALL,
+  isLogin: false,
 } as TaskStore;
 const taskService = new TaskService();
 
@@ -71,6 +73,20 @@ const taskListSlice = createSlice({
       return taskService.executeStrategy(action.payload.action, state, {
         task: action.payload.data,
       });
+    });
+    [getAllTodos, createTodo, deleteTodo, updateTodoName, updateTodoStatus].map(
+      (item) => {
+        builder.addCase(item.rejected, (state: TaskStore, action) => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("thought-user");
+          return { ...state, isLogin: false };
+        });
+      }
+    );
+    builder.addCase(loginGithub.fulfilled, (state: TaskStore, action) => {
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("thought-user", action.payload.user);
+      return { ...state, isLogin: true };
     });
   },
 });
