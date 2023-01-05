@@ -15,7 +15,6 @@ import {
   updateTodoStatus,
 } from "../../api/todo";
 import { FILTER_CONDITION } from "../../constants/FilterCondition";
-import { loginGithub } from "../../api/user";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -26,10 +25,14 @@ export type FilterConditionAction = {
   filterCondition: number;
 };
 
+export type IsLoginAction = {
+  isLogin: boolean;
+};
+
 const initialState = {
   taskList: [],
   filterCondition: FILTER_CONDITION.ALL,
-  isLogin: false,
+  isLogin: !!localStorage.getItem("token"),
 } as TaskStore;
 const taskService = new TaskService();
 
@@ -44,6 +47,15 @@ const taskListSlice = createSlice({
       return {
         ...state,
         filterCondition: actionParams.payload.filterCondition,
+      };
+    },
+    setIsLogin: (
+      state: TaskStore,
+      actionParams: PayloadAction<IsLoginAction>
+    ) => {
+      return {
+        ...state,
+        isLogin: actionParams.payload.isLogin,
       };
     },
   },
@@ -76,21 +88,16 @@ const taskListSlice = createSlice({
     });
     [getAllTodos, createTodo, deleteTodo, updateTodoName, updateTodoStatus].map(
       (item) => {
-        builder.addCase(item.rejected, (state: TaskStore, action) => {
+        builder.addCase(item.rejected, (state: TaskStore, _action) => {
           localStorage.removeItem("token");
           localStorage.removeItem("thought-user");
           return { ...state, isLogin: false };
         });
       }
     );
-    builder.addCase(loginGithub.fulfilled, (state: TaskStore, action) => {
-      localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("thought-user", action.payload.user);
-      return { ...state, isLogin: true };
-    });
   },
 });
 
-export const { updateFilterCondition } = taskListSlice.actions;
+export const { updateFilterCondition, setIsLogin } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

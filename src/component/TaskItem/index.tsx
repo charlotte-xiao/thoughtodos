@@ -40,7 +40,7 @@ const Info = styled.div`
 export const Img = styled.img`
   width: 2rem;
   height: 2rem;
-  margin-left: 0.5rem;
+  margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 2rem;
 

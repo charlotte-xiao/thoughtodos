@@ -4,6 +4,9 @@ import { TaskPage } from "./pages/TaskPage";
 import { Provider } from "react-redux";
 import store from "./store";
 import { HeaderComponent } from "./component/Header";
+import { Route, Routes } from "react-router";
+import { LoginPage } from "./pages/LoginPage";
+import { BrowserRouter } from "react-router-dom";
 
 const Container = styled.div`
   background-color: #b2cef5;
@@ -20,7 +23,12 @@ function App() {
     <Container>
       <Provider store={store}>
         <HeaderComponent />
-        <TaskPage />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<TaskPage />} />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </Container>
   );

@@ -12,33 +12,48 @@ const TODO_API_PREFIX = {
   UPDATE_TODO_STATUS: "updateTodoStatus",
 };
 
-const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
-  const { data } = await axios.get(`${BASE_URL}/todo`);
-  const formatData = data.map(
-    (item: { _id: string; title: string; status: string }) => {
-      return {
-        id: item._id,
-        name: item.title,
-        isCompleted: item.status === "COMPLETED",
-      };
-    }
-  );
-  return {
-    action: ACTION_TYPE.DEFAULT,
-    data: formatData,
-  };
-});
+const getAllTodos = createAsyncThunk(
+  TODO_API_PREFIX.GET_ALL_TODO,
+  async (token: string) => {
+    const { data } = await axios.get(`${BASE_URL}/todo`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    const formatData = data.map(
+      (item: { _id: string; title: string; status: string }) => {
+        return {
+          id: item._id,
+          name: item.title,
+          isCompleted: item.status === "COMPLETED",
+        };
+      }
+    );
+    return {
+      action: ACTION_TYPE.DEFAULT,
+      data: formatData,
+    };
+  }
+);
 
 const createTodo = createAsyncThunk(
   TODO_API_PREFIX.CREATE_TODO,
   async (task: Task) => {
-    const { data } = await axios.post(`${BASE_URL}/todo`, {
-      title: task.name,
-      description: "description",
-      status: "Active",
-      startDate: "2020-01-01",
-      dueDate: "2023-01-01",
-    });
+    const { data } = await axios.post(
+      `${BASE_URL}/todo`,
+      {
+        title: task.name,
+        description: "description",
+        status: "Active",
+        startDate: "2020-01-01",
+        dueDate: "2023-01-01",
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
     const formatData = {
       id: data._id,
       name: data.title,
@@ -54,7 +69,11 @@ const createTodo = createAsyncThunk(
 const deleteTodo = createAsyncThunk(
   TODO_API_PREFIX.DELETE_TODO,
   async (task: Task) => {
-    const { data } = await axios.delete(`${BASE_URL}/todo/${task.id}`);
+    const { data } = await axios.delete(`${BASE_URL}/todo/${task.id}`, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     return {
       action: ACTION_TYPE.DELETE_TASK,
       data: { id: data._id } as Task,
@@ -85,11 +104,19 @@ const updateTodoStatus = createAsyncThunk(
 );
 
 const updateTodo = async (task: Task) => {
-  const { data } = await axios.put(`${BASE_URL}/todo/${task.id}`, {
-    title: task.name,
-    description: "description",
-    status: task.isCompleted ? "COMPLETED" : "Active",
-  });
+  const { data } = await axios.put(
+    `${BASE_URL}/todo/${task.id}`,
+    {
+      title: task.name,
+      description: "description",
+      status: task.isCompleted ? "COMPLETED" : "Active",
+    },
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
   return {
     id: data._id,
     name: data.title,

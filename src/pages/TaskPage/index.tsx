@@ -22,7 +22,8 @@ export const TaskPage: FunctionComponent = () => {
   const taskList: Task[] = useAppSelector(getTaskList);
 
   useEffect(() => {
-    dispatch(getAllTodos());
+    const token = localStorage.getItem("token");
+    token && dispatch(getAllTodos(token));
   }, []);
 
   return (

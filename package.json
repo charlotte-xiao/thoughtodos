@@ -8,11 +8,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
+    "react-router-dom": "^6.6.1",
     "styled-components": "^5.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "dev": "react-scripts build && serve -s build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
