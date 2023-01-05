@@ -34,8 +34,6 @@ export default class TaskService {
   ): TaskStore => {
     preTaskStore.taskList.unshift({
       ...input.task,
-      id: new Date().getTime(),
-      isCompleted: false,
     });
     return preTaskStore;
   };

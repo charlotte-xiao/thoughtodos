@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { getTaskList } from "../../store/task/selectors";
 import { getAllTodos } from "../../api/todo";
 import Task from "../../models/Task";
+import { TOKEN } from "../../constants/Commom";
 
 const Content = styled.div`
   background-color: white;
@@ -22,8 +23,8 @@ export const TaskPage: FunctionComponent = () => {
   const taskList: Task[] = useAppSelector(getTaskList);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    token && dispatch(getAllTodos(token));
+    const token = localStorage.getItem(TOKEN);
+    token && dispatch(getAllTodos());
   }, []);
 
   return (

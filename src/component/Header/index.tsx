@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useAppSelector } from "../../store";
 import { getIsLogin } from "../../store/task/selectors";
 import { UserInfo } from "../UserInfo";
+import { USER } from "../../constants/Commom";
 
 const Section = styled.div`
   line-height: 4rem;
@@ -34,7 +35,7 @@ export const HeaderComponent: FunctionComponent = () => {
 
   useEffect(() => {
     if (isLogin) {
-      const userCache = localStorage.getItem("thought-user");
+      const userCache = localStorage.getItem(USER);
       userCache && setUser(JSON.parse(userCache) as User);
     }
   }, [isLogin]);

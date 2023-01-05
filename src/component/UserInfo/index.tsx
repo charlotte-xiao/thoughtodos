@@ -1,6 +1,10 @@
 import { Img } from "../TaskItem";
 import React from "react";
 import styled from "styled-components";
+import LoginOutImg from "../../assets/loginout.png";
+import { setUnLogin } from "../../api/interceptor";
+import { useDispatch } from "react-redux";
+import { IsLoginAction, setIsLogin } from "../../store/task/reducer";
 
 const LoginButton = styled.input`
   text-align: center;
@@ -22,6 +26,14 @@ const LoginButton = styled.input`
   }
 `;
 
+const Header = styled(Img)`
+  margin: 0.5rem 0;
+`;
+
+const Hello = styled.div`
+  margin-right: 1rem;
+`;
+
 type LoginInfoProps = {
   isLogin: boolean;
   name: string;
@@ -29,17 +41,27 @@ type LoginInfoProps = {
 };
 
 export const UserInfo = ({ isLogin, name, avatar }: LoginInfoProps) => {
+  const dispatch = useDispatch();
   const handleLogin = () => {
     window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=bad5d978cbbb678fb88c&redirect_uri=http://localhost:3000/login";
+      "https://github.com/login/oauth/authorize?client_id=bad5d978cbbb678fb88c&redirect_uri=http://www.xiaostudy.cn:3000/login";
+  };
+
+  const handleLoginOut = () => {
+    setUnLogin();
+    const isLoginAction: IsLoginAction = {
+      isLogin: false,
+    };
+    dispatch(setIsLogin(isLoginAction));
   };
 
   return (
     <>
       {isLogin ? (
         <>
-          <div>{`  欢迎您 ${name}  `}</div>
-          <Img src={avatar} alt="header" />
+          <Hello>{`Hi,${name} ～`}</Hello>
+          <Header src={avatar} alt="header" />
+          <Header src={LoginOutImg} alt="login out" onClick={handleLoginOut} />
         </>
       ) : (
         <LoginButton onClick={handleLogin} defaultValue="Github Login" />
