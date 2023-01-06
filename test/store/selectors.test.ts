@@ -3,22 +3,22 @@ import { FILTER_CONDITION } from "../../src/constants/FilterCondition";
 
 const mockTaskList = [
   {
-    id: 1,
+    id: "1",
     name: "todoTask1",
     isCompleted: false,
   },
   {
-    id: 2,
+    id: "2",
     name: "todoTask2",
     isCompleted: false,
   },
   {
-    id: 3,
+    id: "3",
     name: "completedTask1",
     isCompleted: true,
   },
   {
-    id: 4,
+    id: "4",
     name: "completedTask2",
     isCompleted: true,
   },
@@ -30,6 +30,7 @@ describe("Task Store", () => {
         taskReducer: {
           taskList: mockTaskList,
           filterCondition: FILTER_CONDITION.ALL,
+          isLogin: true,
         },
       });
       expect(filteredTaskList).toHaveLength(4);
@@ -40,6 +41,7 @@ describe("Task Store", () => {
         taskReducer: {
           taskList: mockTaskList,
           filterCondition: FILTER_CONDITION.ACTIVE,
+          isLogin: true,
         },
       });
       filteredTaskList.forEach((task) => {
@@ -52,6 +54,7 @@ describe("Task Store", () => {
         taskReducer: {
           taskList: mockTaskList,
           filterCondition: FILTER_CONDITION.COMPLETED,
+          isLogin: true,
         },
       });
       filteredTaskList.forEach((task) => {

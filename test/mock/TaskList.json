@@ -1,7 +1,7 @@
 [
   { "_id": "1", "title": "have a meeting with girlfriend", "status": "COMPLETED" },
-  { "_id": "2", "title": "read a book", "status": "Active" },
+  { "_id": "2", "title": "read a book", "status": "ACTIVE" },
   { "_id": "3", "title": "buy some orange", "status": "COMPLETED" },
   { "_id": "4", "title": "rewrite react code", "status": "COMPLETED" },
-  { "_id": "5", "title": "buy some book", "status": "Active" }
+  { "_id": "5", "title": "buy some book", "status": "ACTIVE" }
 ]

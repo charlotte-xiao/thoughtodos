@@ -1,17 +1,18 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import userEvent from "@testing-library/user-event";
-import axios from "axios";
 import { Provider } from "react-redux";
 import { TaskPage } from "../../src/pages/TaskPage";
 import store from "../../src/store";
 import TaskList from "../mock/TaskList.json";
+import { axiosInstance } from "../../src/api/interceptor";
 
 describe("Task Page", () => {
   beforeEach(() => {
-    jest.spyOn(axios, "get").mockResolvedValue({
+    jest.spyOn(axiosInstance, "get").mockResolvedValue({
       data: TaskList,
     });
+    jest.spyOn(Storage.prototype, "getItem").mockReturnValue("Bear Token");
   });
 
   test("should render correct task list and time", async () => {
@@ -30,7 +31,7 @@ describe("Task Page", () => {
 
   test("should add task to todoList when input task name and enter", async () => {
     const mockNewTaskName = "mock new Task";
-    jest.spyOn(axios, "post").mockResolvedValue({
+    jest.spyOn(axiosInstance, "post").mockResolvedValue({
       data: {
         _id: "104298749210384",
         title: mockNewTaskName,
@@ -57,7 +58,7 @@ describe("Task Page", () => {
   });
 
   test("should delete task when click delete button", async () => {
-    jest.spyOn(axios, "delete").mockResolvedValue({
+    jest.spyOn(axiosInstance, "delete").mockResolvedValue({
       data: { _id: "1" },
     });
 
@@ -66,6 +67,10 @@ describe("Task Page", () => {
         <TaskPage />
       </Provider>
     );
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("task-item-delete")[0]).toBeInTheDocument();
+    });
 
     userEvent.click(screen.getAllByTestId("task-item-delete")[0]);
 
@@ -80,7 +85,7 @@ describe("Task Page", () => {
   });
 
   test("should update task status when click task checkbox", async () => {
-    jest.spyOn(axios, "put").mockResolvedValue({
+    jest.spyOn(axiosInstance, "put").mockResolvedValue({
       data: {
         _id: TaskList[0]._id,
         title: TaskList[0].title,

@@ -6,7 +6,11 @@ import { FILTER_CONDITION } from "../../src/constants/FilterCondition";
 describe("Task Service", () => {
   test("should add new Task", () => {
     const taskService = new TaskService();
-    const preTaskList = { taskList: [], filterCondition: FILTER_CONDITION.ALL };
+    const preTaskList = {
+      taskList: [],
+      filterCondition: FILTER_CONDITION.ALL,
+      isLogin: true,
+    };
     const newTask = { name: "new Task" } as Task;
 
     const updatedTaskList = taskService.executeStrategy(
@@ -21,10 +25,11 @@ describe("Task Service", () => {
 
   test("should switch Task State", () => {
     const taskService = new TaskService();
-    const todoTask = { id: 1, name: "new Task", isCompleted: false };
+    const todoTask = { id: "1", name: "new Task", isCompleted: false };
     const preTaskList = {
       taskList: [todoTask],
       filterCondition: FILTER_CONDITION.ALL,
+      isLogin: true,
     };
 
     const updatedTaskList = taskService.executeStrategy(
@@ -41,8 +46,12 @@ describe("Task Service", () => {
 
   test("should delete Task", () => {
     const taskService = new TaskService();
-    const completedTask = { id: 1, name: "new Task", isCompleted: true };
-    const preTaskList = { taskList: [], filterCondition: FILTER_CONDITION.ALL };
+    const completedTask = { id: "1", name: "new Task", isCompleted: true };
+    const preTaskList = {
+      taskList: [],
+      filterCondition: FILTER_CONDITION.ALL,
+      isLogin: true,
+    };
 
     const updatedTaskList = taskService.executeStrategy(
       ACTION_TYPE.DELETE_TASK,
@@ -55,10 +64,11 @@ describe("Task Service", () => {
 
   test("should update Task Name", () => {
     const taskService = new TaskService();
-    const completedTask = { id: 1, name: "task", isCompleted: true };
+    const completedTask = { id: "1", name: "task", isCompleted: true };
     const preTaskList = {
       taskList: [completedTask],
       filterCondition: FILTER_CONDITION.ALL,
+      isLogin: true,
     };
 
     const updatedTaskList = taskService.executeStrategy(
