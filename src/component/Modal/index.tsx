@@ -62,34 +62,37 @@ const Title = styled.div`
 type ModalProps = {
   id: string;
   title: string;
+  isVisible: boolean;
   children: React.ReactNode;
-  close: () => void;
+  hide: () => void;
   commit: () => void;
 };
 
 const Modal: FunctionComponent<ModalProps> = ({
   id,
   title,
-  children,
-  close,
+  isVisible,
+  hide,
   commit,
+  children,
 }: ModalProps) => {
   const domEl = document.getElementById(id);
 
   if (!domEl) return null;
+
   const modalContainer = () => {
     return (
       <MaskModal>
         <DialogModal>
           <div>
             <Title>{title}</Title>
-            <Btn className="close" onClick={close}>
+            <Btn className="close" onClick={hide}>
               X
             </Btn>
           </div>
           <div>{children}</div>
           <div>
-            <Btn className="cancel" onClick={close}>
+            <Btn className="cancel" onClick={hide}>
               Cancel
             </Btn>
             <Btn className="commit" onClick={commit}>
@@ -100,7 +103,10 @@ const Modal: FunctionComponent<ModalProps> = ({
       </MaskModal>
     );
   };
-  return ReactDOM.createPortal(modalContainer(), domEl);
+  if (isVisible) {
+    return ReactDOM.createPortal(modalContainer(), domEl);
+  }
+  return <></>;
 };
 
 export default Modal;
