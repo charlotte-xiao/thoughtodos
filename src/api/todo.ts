@@ -1,7 +1,7 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Task from "../models/Task";
 import { ACTION_TYPE } from "../constants/ActionType";
+import { axiosInstance } from "./interceptor";
 
 const BASE_URL = "http://127.0.0.1:7700";
 const TODO_API_PREFIX = {
@@ -13,7 +13,7 @@ const TODO_API_PREFIX = {
 };
 
 const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
-  const { data } = await axios.get(`${BASE_URL}/todo`);
+  const { data } = await axiosInstance.get(`${BASE_URL}/todo`);
   const formatData = data.map(
     (item: { _id: string; title: string; status: string }) => {
       return {
@@ -32,10 +32,10 @@ const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
 const createTodo = createAsyncThunk(
   TODO_API_PREFIX.CREATE_TODO,
   async (task: Task) => {
-    const { data } = await axios.post(`${BASE_URL}/todo`, {
+    const { data } = await axiosInstance.post(`${BASE_URL}/todo`, {
       title: task.name,
       description: "description",
-      status: "Active",
+      status: "ACTIVE",
       startDate: "2020-01-01",
       dueDate: "2023-01-01",
     });
@@ -54,7 +54,7 @@ const createTodo = createAsyncThunk(
 const deleteTodo = createAsyncThunk(
   TODO_API_PREFIX.DELETE_TODO,
   async (task: Task) => {
-    const { data } = await axios.delete(`${BASE_URL}/todo/${task.id}`);
+    const { data } = await axiosInstance.delete(`${BASE_URL}/todo/${task.id}`);
     return {
       action: ACTION_TYPE.DELETE_TASK,
       data: { id: data._id } as Task,
@@ -85,10 +85,10 @@ const updateTodoStatus = createAsyncThunk(
 );
 
 const updateTodo = async (task: Task) => {
-  const { data } = await axios.put(`${BASE_URL}/todo/${task.id}`, {
+  const { data } = await axiosInstance.put(`${BASE_URL}/todo/${task.id}`, {
     title: task.name,
     description: "description",
-    status: task.isCompleted ? "COMPLETED" : "Active",
+    status: task.isCompleted ? "COMPLETED" : "ACTIVE",
   });
   return {
     id: data._id,

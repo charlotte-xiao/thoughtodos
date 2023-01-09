@@ -3,19 +3,9 @@ import styled from "styled-components";
 import { TaskPage } from "./pages/TaskPage";
 import { Provider } from "react-redux";
 import store from "./store";
-
-const Header = styled.header`
-  h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin: 0;
-    padding: 2rem;
-  }
-
-  background: linear-gradient(0.25turn, #c21500, #ffc500);
-  -webkit-background-clip: text;
-  color: transparent;
-`;
+import { HeaderComponent } from "./component/Header";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { LoginPage } from "./pages/LoginPage";
 
 const Container = styled.div`
   background-color: #b2cef5;
@@ -30,11 +20,14 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
-      <Header>
-        <h1>Thoughtodos!</h1>
-      </Header>
       <Provider store={store}>
-        <TaskPage />
+        <HeaderComponent />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<TaskPage />} />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </Container>
   );

@@ -8,8 +8,8 @@ import store from "../../src/store";
 describe("TaskList Component", () => {
   test("should render TaskList", () => {
     const mockTaskList: Task[] = [
-      { id: 1, name: "task1", isCompleted: false },
-      { id: 2, name: "task2", isCompleted: false },
+      { id: "1", name: "task1", isCompleted: false },
+      { id: "2", name: "task2", isCompleted: false },
     ];
 
     render(

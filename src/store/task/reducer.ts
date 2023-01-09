@@ -15,6 +15,7 @@ import {
   updateTodoStatus,
 } from "../../api/todo";
 import { FILTER_CONDITION } from "../../constants/FilterCondition";
+import { TOKEN } from "../../constants/Commom";
 
 export type TaskAction = {
   actionType: ACTION_TYPE;
@@ -25,9 +26,14 @@ export type FilterConditionAction = {
   filterCondition: number;
 };
 
+export type IsLoginAction = {
+  isLogin: boolean;
+};
+
 const initialState = {
   taskList: [],
   filterCondition: FILTER_CONDITION.ALL,
+  isLogin: !!localStorage.getItem(TOKEN),
 } as TaskStore;
 const taskService = new TaskService();
 
@@ -43,6 +49,17 @@ const taskListSlice = createSlice({
         ...state,
         filterCondition: actionParams.payload.filterCondition,
       };
+    },
+    setIsLogin: (
+      state: TaskStore,
+      actionParams: PayloadAction<IsLoginAction>
+    ) => {
+      return actionParams.payload.isLogin
+        ? {
+            ...state,
+            isLogin: actionParams.payload.isLogin,
+          }
+        : initialState;
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<TaskStore>) => {
@@ -75,6 +92,6 @@ const taskListSlice = createSlice({
   },
 });
 
-export const { updateFilterCondition } = taskListSlice.actions;
+export const { updateFilterCondition, setIsLogin } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

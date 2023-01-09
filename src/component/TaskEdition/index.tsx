@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FunctionComponent, useState } from "react";
-import { useModal } from "../../hook/useModal";
 import styled from "styled-components";
 import EditImageURL from "../../assets/edit.png";
 import Task from "../../models/Task";
 import { useAppDispatch } from "../../store";
 import { updateTodoName } from "../../api/todo";
+import Modal from "../Modal";
 
 const Content = styled.div`
   display: flex;
@@ -53,25 +53,39 @@ export const TaskEdition: FunctionComponent<TaskEditionProps> = ({
   task,
 }: TaskEditionProps) => {
   const dispatch = useAppDispatch();
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  const show = () => setIsVisible(true);
+  const hide = () => setIsVisible(false);
+
   const [taskName, setTaskName] = useState(task.name);
 
-  // todo: 性能问题 - 每次更新信息后要卡顿一下
   const handleChangeTaskName = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskName(event.target.value);
   };
 
   const modalProps = {
-    title: "Update Task",
     id: `modal-edition-${task.id}`,
-    preHandle: () => {
+    title: "Update Task",
+    isVisible,
+    hide,
+    commit: () => {
       dispatch(updateTodoName({ ...task, name: taskName }));
+      hide();
     },
   };
-  const { show, RenderModal } = useModal(modalProps);
+
   return (
     <>
       <Img src={EditImageURL} alt="Edit Task" onClick={show} />
-      <RenderModal>
+      <Modal
+        id={modalProps.id}
+        title={modalProps.title}
+        isVisible={modalProps.isVisible}
+        hide={modalProps.hide}
+        commit={modalProps.commit}
+      >
         <Content>
           <Item>
             <Label> 任务:</Label>
@@ -86,7 +100,7 @@ export const TaskEdition: FunctionComponent<TaskEditionProps> = ({
             <Input type="text" defaultValue="describe" />
           </Item>
         </Content>
-      </RenderModal>
+      </Modal>
       <div id={modalProps.id} />
     </>
   );
