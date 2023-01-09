@@ -1,6 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { TaskPage } from "../../src/pages/TaskPage";
 import store from "../../src/store";
@@ -44,8 +43,8 @@ describe("Task Page", () => {
       </Provider>
     );
 
-    userEvent.type(screen.getByRole("textbox"), mockNewTaskName);
-    userEvent.type(screen.getByRole("textbox"), "{enter}");
+    fireEvent.input(screen.getByRole("textbox"), mockNewTaskName);
+    fireEvent.keyDown(screen.getByRole("textbox"), { code: "Enter" });
 
     await waitFor(() => {
       const taskItems = screen.getAllByTestId("task-item");
@@ -72,7 +71,7 @@ describe("Task Page", () => {
       expect(screen.getAllByTestId("task-item-delete")[0]).toBeInTheDocument();
     });
 
-    userEvent.click(screen.getAllByTestId("task-item-delete")[0]);
+    fireEvent.click(screen.getAllByTestId("task-item-delete")[0]);
 
     await waitFor(() => {
       const taskItems = screen.getAllByTestId("task-item");
@@ -112,7 +111,7 @@ describe("Task Page", () => {
       ).toBe(3);
     });
 
-    userEvent.click(screen.getAllByTestId("task-item-update")[0]);
+    fireEvent.click(screen.getAllByTestId("task-item-update")[0]);
 
     await waitFor(() => {
       const taskItems = screen.getAllByTestId("task-item");

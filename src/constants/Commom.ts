@@ -1,4 +1,5 @@
-const USER = "thought-user";
-const TOKEN = "token";
+const USER = "ThoughtUser";
+const TOKEN = "Token";
+const CODE_SEARCH_PREFIX = "?code=";
 
-export { USER, TOKEN };
+export { USER, TOKEN, CODE_SEARCH_PREFIX };
