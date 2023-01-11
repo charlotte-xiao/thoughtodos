@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Task from "../models/Task";
 import { ACTION_TYPE } from "../constants/ActionType";
 import { axiosInstance } from "./interceptor";
+import { BASE_URL } from "../constants/Commom";
 
-const BASE_URL = "http://127.0.0.1:7700";
 const TODO_API_PREFIX = {
   GET_ALL_TODO: "getAllTodo",
   CREATE_TODO: "createTodo",

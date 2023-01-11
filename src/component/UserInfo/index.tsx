@@ -44,7 +44,7 @@ export const UserInfo = ({ isLogin, name, avatar }: LoginInfoProps) => {
   const dispatch = useDispatch();
   const handleLogin = () => {
     window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=bad5d978cbbb678fb88c&redirect_uri=http://www.xiaostudy.cn:3000/login";
+      "https://github.com/login/oauth/authorize?client_id=bad5d978cbbb678fb88c&redirect_uri=http://www.xiaostudy.cn/login";
   };
 
   const handleLoginOut = () => {

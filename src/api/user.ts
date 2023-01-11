@@ -1,6 +1,5 @@
 import { axiosInstance } from "./interceptor";
-
-const BASE_URL = "http://127.0.0.1:7700";
+import { BASE_URL } from "../constants/Commom";
 
 const loginGithub = async (code: string) => {
   const { data } = await axiosInstance.get(
