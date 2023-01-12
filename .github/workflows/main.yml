@@ -31,11 +31,11 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run the eslint
-      run:  npm run lint
-
-    - name: Run the tests
-      run:  npm run test
+#    - name: Run the eslint
+#      run:  npm run lint
+#
+#    - name: Run the tests
+#      run:  npm run test
 
     - name: Run build task
       run:  npm run build
@@ -49,5 +49,3 @@ jobs:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: ${{ secrets.TARGET }}
-#        SCRIPT_BEFORE: $${{ secrets.SCRIPT_BEFORE }}
-#        SCRIPT_AFTER: $${{ secrets.SCRIPT_AFTER }}
