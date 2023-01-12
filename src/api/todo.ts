@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Task from "../models/Task";
 import { ACTION_TYPE } from "../constants/ActionType";
 import { axiosInstance } from "./interceptor";
+import { BACKEND_URL } from "../config";
 
-const BASE_URL = "http://127.0.0.1:7700";
 const TODO_API_PREFIX = {
   GET_ALL_TODO: "getAllTodo",
   CREATE_TODO: "createTodo",
@@ -13,7 +13,7 @@ const TODO_API_PREFIX = {
 };
 
 const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
-  const { data } = await axiosInstance.get(`${BASE_URL}/todo`);
+  const { data } = await axiosInstance.get(`${BACKEND_URL}/todo`);
   const formatData = data.map(
     (item: { _id: string; title: string; status: string }) => {
       return {
@@ -32,7 +32,7 @@ const getAllTodos = createAsyncThunk(TODO_API_PREFIX.GET_ALL_TODO, async () => {
 const createTodo = createAsyncThunk(
   TODO_API_PREFIX.CREATE_TODO,
   async (task: Task) => {
-    const { data } = await axiosInstance.post(`${BASE_URL}/todo`, {
+    const { data } = await axiosInstance.post(`${BACKEND_URL}/todo`, {
       title: task.name,
       description: "description",
       status: "ACTIVE",
@@ -54,7 +54,9 @@ const createTodo = createAsyncThunk(
 const deleteTodo = createAsyncThunk(
   TODO_API_PREFIX.DELETE_TODO,
   async (task: Task) => {
-    const { data } = await axiosInstance.delete(`${BASE_URL}/todo/${task.id}`);
+    const { data } = await axiosInstance.delete(
+      `${BACKEND_URL}/todo/${task.id}`
+    );
     return {
       action: ACTION_TYPE.DELETE_TASK,
       data: { id: data._id } as Task,
@@ -85,7 +87,7 @@ const updateTodoStatus = createAsyncThunk(
 );
 
 const updateTodo = async (task: Task) => {
-  const { data } = await axiosInstance.put(`${BASE_URL}/todo/${task.id}`, {
+  const { data } = await axiosInstance.put(`${BACKEND_URL}/todo/${task.id}`, {
     title: task.name,
     description: "description",
     status: task.isCompleted ? "COMPLETED" : "ACTIVE",

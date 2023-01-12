@@ -5,6 +5,7 @@ import LoginOutImg from "../../assets/loginout.png";
 import { setUnLogin } from "../../api/interceptor";
 import { useDispatch } from "react-redux";
 import { IsLoginAction, setIsLogin } from "../../store/task/reducer";
+import { GITHUB_LOGIN_URL } from "../../config";
 
 const LoginButton = styled.input`
   text-align: center;
@@ -43,8 +44,7 @@ type LoginInfoProps = {
 export const UserInfo = ({ isLogin, name, avatar }: LoginInfoProps) => {
   const dispatch = useDispatch();
   const handleLogin = () => {
-    window.location.href =
-      "https://github.com/login/oauth/authorize?client_id=bad5d978cbbb678fb88c&redirect_uri=http://www.xiaostudy.cn:3000/login";
+    window.location.href = GITHUB_LOGIN_URL;
   };
 
   const handleLoginOut = () => {
