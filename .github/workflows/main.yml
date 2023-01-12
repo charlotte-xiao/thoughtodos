@@ -41,13 +41,13 @@ jobs:
       run:  npm run build
 
     - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: '-avz --delete'
-          SOURCE: "build/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.TARGET }}
-          SCRIPT_BEFORE: $${{ secrets.SCRIPT_BEFORE }}
-          SCRIPT_AFTER: $${{ secrets.SCRIPT_AFTER }}
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        ARGS: '-avz --delete'
+        SOURCE: "build/"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.TARGET }}
+        SCRIPT_BEFORE: $${{ secrets.SCRIPT_BEFORE }}
+        SCRIPT_AFTER: $${{ secrets.SCRIPT_AFTER }}
