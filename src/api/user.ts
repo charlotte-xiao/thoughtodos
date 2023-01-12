@@ -1,9 +1,9 @@
 import { axiosInstance } from "./interceptor";
-import { BASE_URL } from "../constants/Commom";
+import { BACKEND_URL } from "../config";
 
 const loginGithub = async (code: string) => {
   const { data } = await axiosInstance.get(
-    `${BASE_URL}/user/login/github?code=${code}`
+    `${BACKEND_URL}/user/login/github?code=${code}`
   );
   return data;
 };
